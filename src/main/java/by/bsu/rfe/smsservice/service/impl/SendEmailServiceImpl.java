@@ -1,5 +1,6 @@
 package by.bsu.rfe.smsservice.service.impl;
 
+import static by.bsu.rfe.smsservice.common.Constants.REGISTER_USER_SMS_TYPE;
 import static by.bsu.rfe.smsservice.common.enums.SmsServerProperty.AUTHENTICATION_ENABLED;
 import static by.bsu.rfe.smsservice.common.enums.SmsServerProperty.EMAIL_ENABLED;
 import static by.bsu.rfe.smsservice.common.enums.SmsServerProperty.PASSWORD;
@@ -44,7 +45,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class SendEmailServiceImpl implements SendEmailService {
 
-  private static final String REGISTER_USER_SMS_TYPE = "RegisterUserSMS";
   private static final String EMAIL_PARAMETERS_KEY = "email_address";
 
   private RecipientService recipientService;
