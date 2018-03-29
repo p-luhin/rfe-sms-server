@@ -12,7 +12,8 @@
             getPersonsWithoutGroup: getPersonsWithoutGroup,
             addGroup: addGroup,
             getAllGroups: getAllGroups,
-            removeGroup: removeGroup
+            removeGroup: removeGroup,
+            getGroupsByQuery: getGroupsByQuery
         };
 
         function getGroup(groupId) {
@@ -31,6 +32,16 @@
             return $http.get(RestURLFactory.GROUP +
                 '?skip=' + skip + '&offset=' + currentPageSize.value + '&sortField=' + sortField + '&sortDirection=' + sortDirection
             );
+        }
+
+        function getGroupsByQuery(skip, currentPageSize, sortField, sortDirection, query) {
+          return $http.get(RestURLFactory.GROUP +
+              '?skip=' + skip +
+              '&offset=' + currentPageSize.value +
+              '&sortField=' + sortField +
+              '&sortDirection=' + sortDirection +
+              '&query=' + query
+          );
         }
 
         function removeGroup(id) {
