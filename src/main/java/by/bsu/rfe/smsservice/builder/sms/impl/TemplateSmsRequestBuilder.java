@@ -46,8 +46,9 @@ public class TemplateSmsRequestBuilder extends BaseSmsRequestBuilder<TemplateSms
 
     smsRequestDTO.getRecipients()
         .forEach(recipient -> {
-          Map<String, String> recipientParameters = Optional.ofNullable(smsRequestDTO.getParameters()
-              .get(recipient.getName())).orElseGet(HashMap::new);
+          Map<String, String> recipientParameters = Optional
+              .ofNullable(smsRequestDTO.getParameters()
+                  .get(recipient.getName())).orElseGet(HashMap::new);
 
           parametersCollectorResolver.resolve(recipient.getRecipientType())
               .collectParameters(recipient, recipientParameters);
@@ -55,7 +56,8 @@ public class TemplateSmsRequestBuilder extends BaseSmsRequestBuilder<TemplateSms
               recipient, message));
         });
 
-    String finalMessage = createArrayOfMessages(recipientsByMessages);
+    String finalMessage = createArrayOfMessages(recipientsByMessages,
+        smsRequestDTO.getSenderName());
     request
         .addParameter(new BasicNameValuePair(WebSMSParam.MESSAGES.getRequestParam(), finalMessage));
 

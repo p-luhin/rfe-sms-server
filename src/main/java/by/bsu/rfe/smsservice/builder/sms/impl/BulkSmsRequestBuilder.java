@@ -11,7 +11,6 @@ import by.bsu.rfe.smsservice.builder.sms.BaseSmsRequestBuilder;
 import by.bsu.rfe.smsservice.common.dto.RecipientDTO;
 import by.bsu.rfe.smsservice.common.dto.sms.BulkSmsRequestDTO;
 import by.bsu.rfe.smsservice.common.entity.GroupEntity;
-import by.bsu.rfe.smsservice.common.enums.RecipientType;
 import by.bsu.rfe.smsservice.common.request.Request;
 import by.bsu.rfe.smsservice.service.CredentialsService;
 import by.bsu.rfe.smsservice.service.RecipientService;
@@ -21,7 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +65,7 @@ public class BulkSmsRequestBuilder extends BaseSmsRequestBuilder<BulkSmsRequestD
           totalMessages.put(messageAndRecipient.getKey(), createdMessage);
         });
 
-    String finalMessages = createArrayOfMessages(totalMessages);
+    String finalMessages = createArrayOfMessages(totalMessages, smsRequestDTO.getSenderName());
 
     request.addParameter(new BasicNameValuePair(MESSAGES.getRequestParam(), finalMessages));
     return request;
