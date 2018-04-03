@@ -12,7 +12,6 @@ import by.bsu.rfe.smsservice.builder.sms.BaseSmsRequestBuilder;
 import by.bsu.rfe.smsservice.common.dto.RecipientDTO;
 import by.bsu.rfe.smsservice.common.dto.sms.SmsQueueRequestDTO;
 import by.bsu.rfe.smsservice.common.entity.CredentialsEntity;
-import by.bsu.rfe.smsservice.common.enums.RecipientType;
 import by.bsu.rfe.smsservice.common.request.Request;
 import by.bsu.rfe.smsservice.common.websms.WebSMSParam;
 import by.bsu.rfe.smsservice.common.websms.WebSMSRest;
@@ -22,7 +21,6 @@ import by.bsu.rfe.smsservice.validator.mobilenumber.MobileNumberValidator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -67,7 +65,8 @@ public class QueueSmsRequestBuilder extends BaseSmsRequestBuilder<SmsQueueReques
         .stream()
         .collect(toMap((rec) -> rec, (rec) -> message));
 
-    String finalMessage = createArrayOfMessages(recipientsWithMessages);
+    String finalMessage = createArrayOfMessages(recipientsWithMessages,
+        smsQueueRequestDTO.getSenderName());
     request
         .addParameter(new BasicNameValuePair(WebSMSParam.MESSAGES.getRequestParam(), finalMessage));
 
