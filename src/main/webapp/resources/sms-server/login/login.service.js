@@ -5,11 +5,9 @@
         .module('sms-server')
         .factory('loginService', loginService);
 
-    loginService.$inject = ['RestURLFactory', '$http', '$rootScope', '$cookies', '$location'];
+    loginService.$inject = ['RestURLFactory', '$http', '$rootScope', '$cookies', '$location', 'localStorageAuthName', 'cookieAuthName'];
 
-    function loginService(RestURLFactory, $http, $rootScope, $cookies, $location) {
-        var cookieName = 'auth_token';
-        var localStorageAuthName = 'authentication';
+    function loginService(RestURLFactory, $http, $rootScope, $cookies, $location, localStorageAuthName, cookieName) {
 
         return {
             logIn: logIn,
