@@ -167,7 +167,7 @@
         };
 
         $scope.getAllPersons = function () {
-            personsService.getPersons(skip, currentPageSize, sortField, sortDirection).then(function (response) {
+            personsService.getPersons(skip, currentPageSize.value, sortField, sortDirection).then(function (response) {
                 $scope.receivedPersons = response.data.items;
                 allPersons = response.data.items;
 

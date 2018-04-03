@@ -123,7 +123,7 @@
         };
 
         $scope.getAllGroups = function () {
-            groupsService.getAllGroups(skip, currentPageSize, sortField, sortDirection).then(function (response) {
+            groupsService.getAllGroups(skip, currentPageSize.value, sortField, sortDirection).then(function (response) {
                 $scope.receivedGroups = response.data.items;
                 allGroups = response.data.items;
 
