@@ -123,7 +123,7 @@
         };
 
         $scope.getAllGroups = function () {
-            groupsService.getAllGroups(skip, currentPageSize, sortField, sortDirection).then(function (response) {
+            groupsService.getAllGroups(skip, currentPageSize.value, sortField, sortDirection).then(function (response) {
                 $scope.receivedGroups = response.data.items;
                 allGroups = response.data.items;
 
@@ -152,13 +152,13 @@
 
         $scope.$watch('groupFilter', function (newVlaue) {
             if (newVlaue != undefined) {
-                $http.get(RestURLFactory.GROUP +
-                    '?skip=' + skip +
-                    '&offset=' + currentPageSize.value +
-                    '&sortField=' + sortField +
-                    '&sortDirection=' + sortDirection +
-                    '&query=' + newVlaue
-                ).then(function (response) {
+                groupsService.getGroupsByQuery(
+                    skip,
+                    currentPageSize.value,
+                    sortField,
+                    sortDirection,
+                    newVlaue)
+                .then(function (response) {
                     $scope.receivedGroups = response.data.items;
                     allGroups = response.data.items;
 

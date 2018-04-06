@@ -17,12 +17,14 @@ import by.bsu.rfe.smsservice.common.enums.RecipientType;
 import by.bsu.rfe.smsservice.common.response.SendSmsResponse;
 import by.bsu.rfe.smsservice.repository.StatisticsRepository;
 import by.bsu.rfe.smsservice.security.util.SecurityUtil;
+import by.bsu.rfe.smsservice.service.CredentialsService;
 import by.bsu.rfe.smsservice.service.SmsTemplateService;
 import by.bsu.rfe.smsservice.service.StatisticsService;
 import by.bsu.rfe.smsservice.util.DozerUtil;
 import by.bsu.rfe.smsservice.util.PageUtil;
 import java.util.Date;
 import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,6 +42,9 @@ public class StatisticsServiceImpl implements StatisticsService {
 
   @Autowired
   private SmsTemplateService smsTemplateService;
+
+  @Autowired
+  private CredentialsService credentialsService;
 
   @Autowired
   private Mapper mapper;
@@ -107,7 +112,12 @@ public class StatisticsServiceImpl implements StatisticsService {
       statisticsEntity.setSentDate(new Date());
       statisticsEntity.setError(response.isError());
       statisticsEntity.setResponse(response.getTextResponse());
-      statisticsEntity.setSender(requestDTO.getSenderName());
+      if (StringUtils.isEmpty(requestDTO.getSenderName())) {
+        statisticsEntity
+            .setSender(credentialsService.getDefaultCredentialsForCurrentUser().getSender());
+      } else {
+        statisticsEntity.setSender(requestDTO.getSenderName());
+      }
       statisticsEntity.setRecipient(recipient.getName());
       statisticsEntity.setRecipientType(recipient.getRecipientType());
       statisticsEntity.setText(

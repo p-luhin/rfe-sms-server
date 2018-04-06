@@ -14,5 +14,7 @@
             'ui.select',
             'angular-md5',
             'toaster'
-        ]);
+        ])
+    .constant('localStorageAuthName', 'authentication')
+    .constant('cookieAuthName', 'auth_token');
 })();

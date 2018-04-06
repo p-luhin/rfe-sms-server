@@ -1,7 +1,8 @@
 package by.bsu.rfe.smsservice.security.filter;
 
+import static by.bsu.rfe.smsservice.security.util.SecurityUtil.getAuthToken;
+
 import by.bsu.rfe.smsservice.security.helper.AuthenticationHelper;
-import by.bsu.rfe.smsservice.security.util.SecurityUtil;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.FilterChain;
@@ -28,7 +29,7 @@ public class AuthenticationTokenFilter extends GenericFilterBean {
     if (servletRequest instanceof HttpServletRequest) {
       HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
 
-      String token = SecurityUtil.getUserAuthToken(httpServletRequest);
+      String token = getAuthToken(httpServletRequest);
 
       Authentication authentication = null;
 

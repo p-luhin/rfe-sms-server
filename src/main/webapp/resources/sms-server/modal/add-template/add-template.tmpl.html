@@ -4,14 +4,6 @@
 
 <div class="modal-body" id="modal-body">
     <input type="text" ng-model="template.smsType" class="input-field" placeholder="SMS Type">
-    <input type="text"
-           ng-model="template.uriPath"
-           class="input-field"
-           placeholder="URI Path"
-           uib-tooltip="Enter URI path of template. Should start from /rest/sms"
-           tooltip-placement="top"
-           tooltip-trigger="'focus'"
-    >
 
     <textarea class="sms-content-textarea" ng-model="template.template" placeholder="SMS Template. Can be blank"></textarea>
 </div>

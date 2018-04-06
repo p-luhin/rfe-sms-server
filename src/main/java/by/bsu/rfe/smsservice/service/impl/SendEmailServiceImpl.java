@@ -138,6 +138,9 @@ public class SendEmailServiceImpl implements SendEmailService {
     properties.put("mail.smtp.host", emailProperties.get(SMTP_HOST.getDisplayValue()));
     properties.put("mail.smtp.port", emailProperties.get(SMTP_PORT.getDisplayValue()));
 
+    //Temp solution due we don't have certs for email host
+    properties.put("mail.smtp.ssl.trust", emailProperties.get(SMTP_HOST.getDisplayValue()));
+
     Session session = Session.getInstance(properties,
         new javax.mail.Authenticator() {
           protected PasswordAuthentication getPasswordAuthentication() {

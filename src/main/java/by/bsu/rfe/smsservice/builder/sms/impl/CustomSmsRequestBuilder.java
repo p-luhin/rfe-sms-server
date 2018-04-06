@@ -43,7 +43,7 @@ public class CustomSmsRequestBuilder extends BaseSmsRequestBuilder<CustomSmsRequ
               recipient, requestDTO.getContent()));
         });
 
-    String finalMessage = createArrayOfMessages(recipientsByMessages);
+    String finalMessage = createArrayOfMessages(recipientsByMessages, requestDTO.getSenderName());
     request
         .addParameter(new BasicNameValuePair(WebSMSParam.MESSAGES.getRequestParam(), finalMessage));
 

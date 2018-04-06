@@ -71,12 +71,15 @@ public abstract class BaseSmsRequestBuilder<T extends BaseSmsRequestDTO> extends
     return request;
   }
 
-  protected String createArrayOfMessages(Map<String, String> messages) {
+  protected String createArrayOfMessages(Map<String, String> messages, String senderName) {
     StringBuilder stringBuilder = new StringBuilder();
     stringBuilder.append("[");
 
     for (Map.Entry<String, String> message : messages.entrySet()) {
       stringBuilder.append("{\"recipient\":\"").append(message.getKey()).append("\",");
+
+      //TODO add bulk sms sending only for bulk types, use single sms sending for custom, template and queue
+      stringBuilder.append("\"sender\":\"").append(senderName).append("\",");
       stringBuilder.append("\"message\":\"").append(message.getValue()).append("\"},");
     }
 

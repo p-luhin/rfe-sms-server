@@ -10,7 +10,8 @@
         return {
             removePerson: removePerson,
             getPersons: getPersons,
-            addPersons: addPersons
+            addPersons: addPersons,
+            getPersonsByQuery: getPersonsByQuery
         };
 
         function removePerson(id) {
@@ -19,7 +20,17 @@
 
         function getPersons(skip, currentPageSize, sortField, sortDirection) {
             return $http.get(RestURLFactory.PERSONS +
-                '?skip=' + skip + '&offset=' + currentPageSize.value + '&sortField=' + sortField + '&sortDirection=' + sortDirection);
+                '?skip=' + skip + '&offset=' + currentPageSize + '&sortField=' + sortField + '&sortDirection=' + sortDirection);
+        }
+        
+        function getPersonsByQuery(skip, currentPageSize, sortField, sortDirection, query) {
+          return $http.get(RestURLFactory.PERSONS +
+              '?skip=' + skip +
+              '&offset=' + currentPageSize +
+              '&sortField=' + sortField +
+              '&sortDirection=' + sortDirection +
+              '&query=' + query
+          );
         }
 
         function addPersons(persons) {

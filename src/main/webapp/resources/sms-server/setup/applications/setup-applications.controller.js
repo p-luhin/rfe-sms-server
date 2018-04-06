@@ -20,8 +20,8 @@
                 animation: true,
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
-                templateUrl: 'resources/templates/modal/addNewApplication-modal.html',
-                controller: 'AddNewApplicationModalController',
+                templateUrl: 'resources/sms-server/modal/add-application/add-application.tmpl.html',
+                controller: 'addApplicationCtrl',
                 size: 'lg'
             }).closed.then(function () {
                 getAllApplications();

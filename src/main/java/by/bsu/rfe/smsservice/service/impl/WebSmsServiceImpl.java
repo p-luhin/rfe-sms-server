@@ -1,5 +1,6 @@
 package by.bsu.rfe.smsservice.service.impl;
 
+import static by.bsu.rfe.smsservice.common.Constants.PROFILE_PROD;
 import static org.apache.http.client.methods.RequestBuilder.post;
 
 import by.bsu.rfe.smsservice.common.request.Request;
@@ -20,10 +21,12 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
+@Profile(PROFILE_PROD)
 public class WebSmsServiceImpl implements WebSmsService {
 
   private static final HttpClient HTTP_CLIENT = HttpClientBuilder.create().build();
@@ -45,7 +48,7 @@ public class WebSmsServiceImpl implements WebSmsService {
       return sendSmsResponse;
     } catch (IOException e) {
       log.error("Error while mapping send sms response to object");
-      log.error(e.getMessage());
+      log.error("", e);
       throw new RuntimeException(e);
     }
   }
@@ -58,7 +61,7 @@ public class WebSmsServiceImpl implements WebSmsService {
       return objectMapper.readValue(content, BalanceResponse.class);
     } catch (IOException e) {
       log.error("Error while mapping balance response to object");
-      log.error(e.getMessage());
+      log.error("", e);
       throw new RuntimeException(e);
     }
   }
@@ -78,8 +81,8 @@ public class WebSmsServiceImpl implements WebSmsService {
       log.debug("Executing web sms request...");
       response = HTTP_CLIENT.execute(httpRequest);
     } catch (IOException e) {
-      log.error("Error while trying to sendSms request");
-      log.error(e.getMessage());
+      log.error("Error while trying to execute websms request");
+      log.error("", e);
       throw new RuntimeException(e);
     }
 

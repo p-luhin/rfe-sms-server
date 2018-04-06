@@ -167,7 +167,7 @@
         };
 
         $scope.getAllPersons = function () {
-            personsService.getPersons(skip, currentPageSize, sortField, sortDirection).then(function (response) {
+            personsService.getPersons(skip, currentPageSize.value, sortField, sortDirection).then(function (response) {
                 $scope.receivedPersons = response.data.items;
                 allPersons = response.data.items;
 
@@ -184,13 +184,13 @@
         $scope.$watch('personsFilter', function (newVlaue) {
 
             if (newVlaue != undefined) {
-                $http.get(RestURLFactory.PERSONS +
-                    '?skip=' + skip +
-                    '&offset=' + currentPageSize.value +
-                    '&sortField=' + sortField +
-                    '&sortDirection=' + sortDirection +
-                    '&query=' + newVlaue
-                ).then(function (response) {
+                personsService.getPersonsByQuery(
+                    skip,
+                    currentPageSize.value,
+                    sortField,
+                    sortDirection,
+                    newVlaue)
+                .then(function (response) {
                     $scope.receivedPersons = response.data.items;
                     allPersons = response.data.items;
 
