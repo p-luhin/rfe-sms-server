@@ -6,7 +6,7 @@
 
   <groupId>by.bsu.rfe</groupId>
   <artifactId>sms-server</artifactId>
-  <version>1.3.5</version>
+  <version>1.3.6</version>
 
   <packaging>war</packaging>
 
