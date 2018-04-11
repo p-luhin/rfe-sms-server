@@ -11,8 +11,12 @@
         $scope.selected.credentials = {};
 
         $scope.changePassword = function (oldPassword, newPassword, anotherNewPassword) {
-            if (!oldPassword || !newPassword || !anotherNewPassword || newPassword != anotherNewPassword) {
-
+            if (!oldPassword ||
+                !newPassword ||
+                !anotherNewPassword ||
+                newPassword !== anotherNewPassword ||
+                newPassword === oldPassword
+            ) {
                 toaster.pop({
                     type: 'error',
                     title: 'Error',

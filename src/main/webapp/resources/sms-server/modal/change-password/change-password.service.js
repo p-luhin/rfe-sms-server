@@ -12,7 +12,7 @@
         };
 
         function changePassword(password) {
-            return $http.post(RestURLFactory.CHANGE_PASSWORD, passObj);
+            return $http.post(RestURLFactory.CHANGE_PASSWORD, password);
         }
     }
 })();
