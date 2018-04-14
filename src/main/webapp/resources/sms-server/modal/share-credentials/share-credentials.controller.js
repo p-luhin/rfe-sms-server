@@ -3,7 +3,7 @@
 
     angular
         .module('sms-server')
-        .controller('shareCredentialsController', shareCredentialsController);
+        .controller('shareCredentialsCtrl', shareCredentialsController);
 
     shareCredentialsController.$inject = ['shareCredentialsService', '$scope', '$uibModalInstance', '$rootScope'];
     function shareCredentialsController(shareCredentialsService, $scope, $uibModalInstance, $rootScope) {
