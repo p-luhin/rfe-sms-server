@@ -1,5 +1,8 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
   <changeSet author="pluhin (generated)" id="1523710819284-1">
     <createTable tableName="authentication_token">
@@ -233,10 +236,12 @@
     </createTable>
   </changeSet>
   <changeSet author="pluhin (generated)" id="1523710819284-14">
-    <addUniqueConstraint columnNames="application_name" constraintName="application_name" tableName="external_application"/>
+    <addUniqueConstraint columnNames="application_name" constraintName="application_name"
+      tableName="external_application"/>
   </changeSet>
   <changeSet author="pluhin (generated)" id="1523710819284-15">
-    <addUniqueConstraint columnNames="property_key" constraintName="key" tableName="sms_server_property"/>
+    <addUniqueConstraint columnNames="property_key" constraintName="key"
+      tableName="sms_server_property"/>
   </changeSet>
   <changeSet author="pluhin (generated)" id="1523710819284-16">
     <addUniqueConstraint columnNames="name" constraintName="name" tableName="recipient_group"/>
@@ -296,30 +301,50 @@
     </createIndex>
   </changeSet>
   <changeSet author="pluhin (generated)" id="1523710819284-29">
-    <addForeignKeyConstraint baseColumnNames="default_credentials" baseTableName="external_application" constraintName="app_default_creds" deferrable="false" initiallyDeferred="false" onDelete="SET NULL" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="credentials"/>
+    <addForeignKeyConstraint baseColumnNames="default_credentials"
+      baseTableName="external_application" constraintName="app_default_creds" deferrable="false"
+      initiallyDeferred="false" onDelete="SET NULL" onUpdate="NO ACTION" referencedColumnNames="id"
+      referencedTableName="credentials"/>
   </changeSet>
   <changeSet author="pluhin (generated)" id="1523710819284-30">
-    <addForeignKeyConstraint baseColumnNames="credentials_id" baseTableName="sms_queue" constraintName="creds_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="credentials"/>
+    <addForeignKeyConstraint baseColumnNames="credentials_id" baseTableName="sms_queue"
+      constraintName="creds_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+      onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="credentials"/>
   </changeSet>
   <changeSet author="pluhin (generated)" id="1523710819284-31">
-    <addForeignKeyConstraint baseColumnNames="default_credentials" baseTableName="user" constraintName="def_creds_key" deferrable="false" initiallyDeferred="false" onDelete="SET NULL" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="credentials"/>
+    <addForeignKeyConstraint baseColumnNames="default_credentials" baseTableName="user"
+      constraintName="def_creds_key" deferrable="false" initiallyDeferred="false"
+      onDelete="SET NULL" onUpdate="NO ACTION" referencedColumnNames="id"
+      referencedTableName="credentials"/>
   </changeSet>
   <changeSet author="pluhin (generated)" id="1523710819284-32">
-    <addForeignKeyConstraint baseColumnNames="group_id" baseTableName="persons_have_groups" constraintName="group_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="recipient_group"/>
+    <addForeignKeyConstraint baseColumnNames="group_id" baseTableName="persons_have_groups"
+      constraintName="group_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+      onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="recipient_group"/>
   </changeSet>
   <changeSet author="pluhin (generated)" id="1523710819284-33">
-    <addForeignKeyConstraint baseColumnNames="person_id" baseTableName="persons_have_groups" constraintName="person_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="person"/>
+    <addForeignKeyConstraint baseColumnNames="person_id" baseTableName="persons_have_groups"
+      constraintName="person_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+      onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="person"/>
   </changeSet>
   <changeSet author="pluhin (generated)" id="1523710819284-34">
-    <addForeignKeyConstraint baseColumnNames="sms_template" baseTableName="email_template" constraintName="template_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="sms_template"/>
+    <addForeignKeyConstraint baseColumnNames="sms_template" baseTableName="email_template"
+      constraintName="template_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+      onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="sms_template"/>
   </changeSet>
   <changeSet author="pluhin (generated)" id="1523710819284-35">
-    <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="authentication_token" constraintName="token_user_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user"/>
+    <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="authentication_token"
+      constraintName="token_user_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+      onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user"/>
   </changeSet>
   <changeSet author="pluhin (generated)" id="1523710819284-36">
-    <addForeignKeyConstraint baseColumnNames="credentials_id" baseTableName="users_credentials" constraintName="user_cred_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="credentials"/>
+    <addForeignKeyConstraint baseColumnNames="credentials_id" baseTableName="users_credentials"
+      constraintName="user_cred_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+      onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="credentials"/>
   </changeSet>
   <changeSet author="pluhin (generated)" id="1523710819284-37">
-    <addForeignKeyConstraint baseColumnNames="users_id" baseTableName="users_credentials" constraintName="user_user_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user"/>
+    <addForeignKeyConstraint baseColumnNames="users_id" baseTableName="users_credentials"
+      constraintName="user_user_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+      onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user"/>
   </changeSet>
 </databaseChangeLog>
