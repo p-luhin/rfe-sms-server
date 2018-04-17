@@ -1,1 +1,0 @@
-ALTER TABLE `statistics` ADD initiated_by VARCHAR(255) NOT NULL DEFAULT 'pavel.luhin@gmail.com';
