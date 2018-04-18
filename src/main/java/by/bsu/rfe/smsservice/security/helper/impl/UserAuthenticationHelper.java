@@ -1,6 +1,7 @@
-package by.bsu.rfe.smsservice.security.helper;
+package by.bsu.rfe.smsservice.security.helper.impl;
 
 import by.bsu.rfe.smsservice.common.entity.UserEntity;
+import by.bsu.rfe.smsservice.security.helper.AuthenticationHelper;
 import by.bsu.rfe.smsservice.service.UserService;
 import java.util.ArrayList;
 import org.slf4j.Logger;

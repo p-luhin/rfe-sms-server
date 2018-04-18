@@ -5,6 +5,7 @@ import by.bsu.rfe.smsservice.service.UserService;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -27,11 +28,11 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
     UserEntity userEntity = userService.findByUsername(username);
     if (userEntity != null && userEntity.getPassword().equals(password)) {
       UsernamePasswordAuthenticationToken authResult = new UsernamePasswordAuthenticationToken(
-          username, password, new ArrayList<GrantedAuthority>());
+          username, password, new ArrayList<>());
       SecurityContextHolder.getContext().setAuthentication(authResult);
       return authResult;
     } else {
-      return null;
+      throw new BadCredentialsException("Invalid username or password");
     }
   }
 

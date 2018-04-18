@@ -1,7 +1,8 @@
-package by.bsu.rfe.smsservice.security.helper;
+package by.bsu.rfe.smsservice.security.helper.impl;
 
 import by.bsu.rfe.smsservice.common.entity.ExternalApplicationEntity;
 import by.bsu.rfe.smsservice.security.common.ApplicationAuthentication;
+import by.bsu.rfe.smsservice.security.helper.AuthenticationHelper;
 import by.bsu.rfe.smsservice.service.ExternalApplicationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
