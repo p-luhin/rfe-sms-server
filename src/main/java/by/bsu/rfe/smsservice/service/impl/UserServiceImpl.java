@@ -85,11 +85,7 @@ public class UserServiceImpl implements UserService {
     Authentication authentication = new UsernamePasswordAuthenticationToken(
         authenticationDTO.getUsername(), authenticationDTO.getPassword());
 
-    try {
-      authenticationManager.authenticate(authentication);
-    } catch (Exception ex) {
-      throw new BadCredentialsException("Bad credentials");
-    }
+    authenticationManager.authenticate(authentication);
 
     UserEntity userEntity = userRepository.findByUsername(authenticationDTO.getUsername());
     String token = generateToken();
@@ -97,7 +93,7 @@ public class UserServiceImpl implements UserService {
     tokenEntity.setToken(token);
     tokenEntity.setExpires(DateUtils.addWeeks(new Date(), 2));
     if (userEntity.getTokens() == null) {
-      userEntity.setTokens(new ArrayList<AuthenticationTokenEntity>());
+      userEntity.setTokens(new ArrayList<>());
     }
     userEntity.getTokens().add(tokenEntity);
     userRepository.saveAndFlush(userEntity);
