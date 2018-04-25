@@ -347,4 +347,87 @@
       constraintName="user_user_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
       onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user"/>
   </changeSet>
+
+  <changeSet author="pluhin (generated)" id="1524650599897-1">
+    <insert tableName="email_template">
+      <column name="created_by" value="SYSTEM"/>
+      <column name="content" value="Hello ${USERNAME},&lt;br&gt;&lt;br&gt;Your account on SMS-Server was successfully registered.&lt;br&gt;&#10;                                                                                               SMS-Server address is: ${SERVER.URL}&lt;br&gt;&#10;                                                                                               User the following credentials to log in:&lt;br&gt;&#10;                                                                                               &lt;b&gt;Username:&lt;/b&gt; ${EMAIL},&lt;br&gt;&lt;b&gt;Password&lt;/b&gt;: ${PASSWORD}."/>
+      <column name="subject" value="Your account on SMS-Server was registered"/>
+      <column name="sms_template"/>
+    </insert>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1524650599897-2">
+    <insert tableName="sms_server_property">
+      <column name="property_key" value="AUTHENTICATION_ENABLED"/>
+      <column name="value" value=""/>
+      <column name="property_group" value="EMAIL"/>
+    </insert>
+    <insert tableName="sms_server_property">
+      <column name="property_key" value="EMAIL_ENABLED"/>
+      <column name="value" value="false"/>
+      <column name="property_group" value="EMAIL"/>
+    </insert>
+    <insert tableName="sms_server_property">
+      <column name="property_key" value="MUTE_ENABLED"/>
+      <column name="value" value="false"/>
+      <column name="property_group" value="MUTE_MODE"/>
+    </insert>
+    <insert tableName="sms_server_property">
+      <column name="property_key" value="MUTE_END_TIME"/>
+      <column name="value" value="00:00"/>
+      <column name="property_group" value="MUTE_MODE"/>
+    </insert>
+    <insert tableName="sms_server_property">
+      <column name="property_key" value="MUTE_START_TIME"/>
+      <column name="value" value="00:00"/>
+      <column name="property_group" value="MUTE_MODE"/>
+    </insert>
+    <insert tableName="sms_server_property">
+      <column name="property_key" value="PASSWORD"/>
+      <column name="value" value=""/>
+      <column name="property_group" value="EMAIL"/>
+    </insert>
+    <insert tableName="sms_server_property">
+      <column name="property_key" value="SMTP_HOST"/>
+      <column name="value" value=""/>
+      <column name="property_group" value="EMAIL"/>
+    </insert>
+    <insert tableName="sms_server_property">
+      <column name="property_key" value="SMTP_PORT"/>
+      <column name="value" value=""/>
+      <column name="property_group" value="EMAIL"/>
+    </insert>
+    <insert tableName="sms_server_property">
+      <column name="property_key" value="TLS_ENABLED"/>
+      <column name="value" value=""/>
+      <column name="property_group" value="EMAIL"/>
+    </insert>
+    <insert tableName="sms_server_property">
+      <column name="property_key" value="USERNAME"/>
+      <column name="value" value=""/>
+      <column name="property_group" value="EMAIL"/>
+    </insert>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1524650599897-3">
+    <insert tableName="sms_template">
+      <column name="sms_type" value="CustomSMS"/>
+      <column name="template"/>
+      <column name="created_by" value="SYSTEM"/>
+      <column name="enabled" valueNumeric="0"/>
+    </insert>
+    <insert tableName="sms_template">
+      <column name="sms_type" value="RegisterUserSMS"/>
+      <column name="template"/>
+      <column name="created_by" value="SYSTEM"/>
+      <column name="enabled" valueNumeric="0"/>
+    </insert>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1524650599897-4">
+    <insert tableName="user">
+      <column name="username" value="pavel.luhin@gmail.com"/>
+      <column name="password" value="42d8aa7cde9c78c4757862d84620c335"/>
+      <column name="default_credentials"/>
+      <column name="created_by" value="SYSTEM"/>
+    </insert>
+  </changeSet>
 </databaseChangeLog>
