@@ -37,9 +37,9 @@ function buildScripts() {
 
 gulp.task('inject', ['libs-js', 'scripts-js', 'templatecache', 'css', 'fonts'], function () {
   gulp.src('webapp/index.html')
-  .pipe(inject(gulp.src(TARGET_FOLDER + '/js/vendors.js', {read: false}), {ignorePath: TARGET_FOLDER, addRootSlash: false, name: 'head'}))
-  .pipe(inject(gulp.src([TARGET_FOLDER + '/js/app.js', TARGET_FOLDER + '/js/templates.js'], {read: false}), {ignorePath: TARGET_FOLDER, addRootSlash: false}))
-  .pipe(inject(gulp.src(TARGET_FOLDER + '/styles/styles.css'), {ignorePath: TARGET_FOLDER, addRootSlash: false}))
+  .pipe(inject(gulp.src(TARGET_FOLDER + '/js/vendors.js', {read: false}), {ignorePath: '.tmp/META-INF/resources', addRootSlash: false, name: 'head'}))
+  .pipe(inject(gulp.src([TARGET_FOLDER + '/js/app.js', TARGET_FOLDER + '/js/templates.js'], {read: false}), {ignorePath: '.tmp/META-INF/resources', addRootSlash: false}))
+  .pipe(inject(gulp.src(TARGET_FOLDER + '/styles/styles.css'), {ignorePath: '.tmp/META-INF/resources', addRootSlash: false}))
   .pipe(gulp.dest(TARGET_FOLDER));
 });
 
