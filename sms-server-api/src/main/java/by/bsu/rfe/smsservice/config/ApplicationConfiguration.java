@@ -9,10 +9,10 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @ComponentScan({
-    "by.bsu.rfe.by.bsu.rfe.smsservice.service.impl",
-    "by.bsu.rfe.by.bsu.rfe.smsservice.builder",
-    "by.bsu.rfe.by.bsu.rfe.smsservice.validator",
-    "by.bsu.rfe.by.bsu.rfe.smsservice.builder.parameters"
+    "by.bsu.rfe.smsservice.service.impl",
+    "by.bsu.rfe.smsservice.builder",
+    "by.bsu.rfe.smsservice.validator",
+    "by.bsu.rfe.smsservice.builder.parameters"
 })
 @PropertySource("classpath:application.properties")
 public class ApplicationConfiguration {

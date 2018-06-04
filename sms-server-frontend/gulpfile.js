@@ -3,16 +3,18 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var ngAnnotate = require('gulp-ng-annotate');
 var tempCache = require('gulp-angular-templatecache');
-var minifyHtml = require('gulp-minify-html');
 var inject = require('gulp-inject');
 var watch = require('gulp-watch');
 
+const SOURCE_FOLDER = 'webapp/resources';
+const TARGET_FOLDER = './.tmp/META-INF/resources';
+
 gulp.task('libs-js', function () {
-  return gulp.src('webapp/resources/libs/**/*.js')
+  return gulp.src([SOURCE_FOLDER + '/libs/angular/angular.min.js', SOURCE_FOLDER + '/libs/**/*.js'])
   .pipe(concat('vendors.js'))
   .pipe(ngAnnotate())
   .pipe(uglify())
-  .pipe(gulp.dest('./.tmp/js'));
+  .pipe(gulp.dest(TARGET_FOLDER + '/js'));
 });
 
 gulp.task('css', concatCss);
@@ -20,25 +22,25 @@ gulp.task('css', concatCss);
 function concatCss() {
   return gulp.src('webapp/**/*.css')
   .pipe(concat('styles.css'))
-  .pipe(gulp.dest('./.tmp/styles'));
+  .pipe(gulp.dest(TARGET_FOLDER + '/styles'));
 }
 
 gulp.task('scripts-js', buildScripts);
 
 function buildScripts() {
-  return gulp.src(['webapp/resources/sms-server/sms-server.js', 'webapp/resources/sms-server/**/*.js'])
+  return gulp.src(['webapp/resources/sms-server/smsserver.js', 'webapp/resources/sms-server/**/*.js'])
   .pipe(concat('app.js'))
   .pipe(ngAnnotate())
   .pipe(uglify())
-  .pipe(gulp.dest('./.tmp/js'));
+  .pipe(gulp.dest(TARGET_FOLDER + '/js'));
 }
 
 gulp.task('inject', ['libs-js', 'scripts-js', 'templatecache', 'css', 'fonts'], function () {
   gulp.src('webapp/index.html')
-  .pipe(inject(gulp.src('./.tmp/js/vendors.js', {read: false}), {ignorePath: '.tmp', addRootSlash: false, name: 'head'}))
-  .pipe(inject(gulp.src(['./.tmp/js/app.js', './.tmp/js/templates.js'], {read: false}), {ignorePath: '.tmp', addRootSlash: false}))
-  .pipe(inject(gulp.src('./.tmp/styles/styles.css'), {ignorePath: '.tmp', addRootSlash: false}))
-  .pipe(gulp.dest('./.tmp'));
+  .pipe(inject(gulp.src(TARGET_FOLDER + '/js/vendors.js', {read: false}), {ignorePath: TARGET_FOLDER, addRootSlash: false, name: 'head'}))
+  .pipe(inject(gulp.src([TARGET_FOLDER + '/js/app.js', TARGET_FOLDER + '/js/templates.js'], {read: false}), {ignorePath: TARGET_FOLDER, addRootSlash: false}))
+  .pipe(inject(gulp.src(TARGET_FOLDER + '/styles/styles.css'), {ignorePath: TARGET_FOLDER, addRootSlash: false}))
+  .pipe(gulp.dest(TARGET_FOLDER));
 });
 
 gulp.task('templatecache', buildTemplates);
@@ -50,14 +52,14 @@ function buildTemplates() {
         module: 'sms-server',
         standAlone: false
       }))
-  .pipe(gulp.dest('./.tmp/js/'));
+  .pipe(gulp.dest(TARGET_FOLDER + '/js/'));
 }
 
 gulp.task('fonts', copyFonts);
 
 function copyFonts() {
-  return gulp.src('./UI/libs/components-font-awesome/fonts/**.*')
-  .pipe(gulp.dest('./.tmp/fonts/'));
+  return gulp.src('./webapp/resources/fonts/*/**.*')
+  .pipe(gulp.dest(TARGET_FOLDER + '/fonts/'));
 }
 
 gulp.task('watch-styles', function () {
@@ -72,12 +74,7 @@ gulp.task('watch-templates', function () {
   return watch('webapp/resources/sms-server/**/*.html', { ignoreInitial: false }, buildTemplates);
 });
 
-gulp.task('copy', function () {
-  return gulp.src('./tmp')
-  .pipe(gulp.dest('../sms-server-api/src/main/webapp/'));
-});
-
-gulp.task('build', ['inject', 'copy']);
+gulp.task('build', ['inject']);
 
 gulp.task('watchers', ['watch-styles', 'watch-scripts', 'watch-templates']);
 

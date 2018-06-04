@@ -15,7 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
-@ComponentScan("by.bsu.rfe.by.bsu.rfe.smsservice.security.helper")
+@ComponentScan("by.bsu.rfe.smsservice.security.helper")
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 

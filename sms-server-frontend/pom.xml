@@ -7,7 +7,7 @@
   <artifactId>sms-server-frontend</artifactId>
   <version>1.4-SNAPSHOT</version>
 
-  <packaging>pom</packaging>
+  <packaging>jar</packaging>
 
   <parent>
     <groupId>by.bsu.rfe</groupId>
@@ -16,6 +16,11 @@
   </parent>
 
   <build>
+    <resources>
+      <resource>
+        <directory>.tmp</directory>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <groupId>com.github.eirslett</groupId>
@@ -60,6 +65,12 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <finalName>sms-server-frontend</finalName>
+        </configuration>
       </plugin>
     </plugins>
   </build>
