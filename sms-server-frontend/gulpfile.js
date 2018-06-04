@@ -8,7 +8,7 @@ var inject = require('gulp-inject');
 var watch = require('gulp-watch');
 
 gulp.task('libs-js', function () {
-  gulp.src('webapp/resources/libs/**/*.js')
+  return gulp.src('webapp/resources/libs/**/*.js')
   .pipe(concat('vendors.js'))
   .pipe(ngAnnotate())
   .pipe(uglify())
@@ -18,7 +18,7 @@ gulp.task('libs-js', function () {
 gulp.task('css', concatCss);
 
 function concatCss() {
-  gulp.src('webapp/**/*.css')
+  return gulp.src('webapp/**/*.css')
   .pipe(concat('styles.css'))
   .pipe(gulp.dest('./.tmp/styles'));
 }
@@ -26,14 +26,14 @@ function concatCss() {
 gulp.task('scripts-js', buildScripts);
 
 function buildScripts() {
-  gulp.src(['webapp/resources/sms-server/sms-server.js', 'webapp/resources/sms-server/**/*.js'])
+  return gulp.src(['webapp/resources/sms-server/sms-server.js', 'webapp/resources/sms-server/**/*.js'])
   .pipe(concat('app.js'))
   .pipe(ngAnnotate())
   .pipe(uglify())
   .pipe(gulp.dest('./.tmp/js'));
 }
 
-gulp.task('inject', function () {
+gulp.task('inject', ['libs-js', 'scripts-js', 'templatecache', 'css', 'fonts'], function () {
   gulp.src('webapp/index.html')
   .pipe(inject(gulp.src('./.tmp/js/vendors.js', {read: false}), {ignorePath: '.tmp', addRootSlash: false, name: 'head'}))
   .pipe(inject(gulp.src(['./.tmp/js/app.js', './.tmp/js/templates.js'], {read: false}), {ignorePath: '.tmp', addRootSlash: false}))
@@ -77,7 +77,7 @@ gulp.task('copy', function () {
   .pipe(gulp.dest('../sms-server-api/src/main/webapp/'));
 });
 
-gulp.task('build', ['libs-js', 'scripts-js', 'templatecache', 'css', 'fonts', 'inject', 'copy']);
+gulp.task('build', ['inject', 'copy']);
 
 gulp.task('watchers', ['watch-styles', 'watch-scripts', 'watch-templates']);
 

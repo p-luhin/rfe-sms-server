@@ -42,12 +42,21 @@
             </configuration>
           </execution>
           <execution>
-            <id>npm run build</id>
+            <id>npm install gulp</id>
             <goals>
               <goal>npm</goal>
             </goals>
             <configuration>
-              <arguments>run build</arguments>
+              <arguments>install gulp</arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>gulp build</id>
+            <goals>
+              <goal>gulp</goal>
+            </goals>
+            <configuration>
+              <arguments>build</arguments>
             </configuration>
           </execution>
         </executions>

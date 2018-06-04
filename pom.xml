@@ -11,8 +11,8 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>sms-server-api</module>
     <module>sms-server-frontend</module>
+    <module>sms-server-api</module>
   </modules>
 
   <parent>
