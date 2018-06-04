@@ -32,9 +32,4 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     registry.addInterceptor(new RequestLoggerInterceptor());
     super.addInterceptors(registry);
   }
-
-  @Override
-  public void addCorsMappings(CorsRegistry registry) {
-    registry.addMapping("/**").allowedMethods("*").allowedOrigins("http://localhost:4200");
-  }
 }
