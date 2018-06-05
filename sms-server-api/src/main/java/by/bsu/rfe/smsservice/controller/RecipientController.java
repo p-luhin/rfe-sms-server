@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by pluhin on 3/5/2016.
  */
 @RestController
-@RequestMapping(value = "/recipient", produces = APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/rest/recipient", produces = APPLICATION_JSON_UTF8_VALUE)
 public class RecipientController {
 
   @Autowired

@@ -23,7 +23,7 @@
         animation: true,
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',
-        templateUrl: 'resources/sms-server/modal/add-user/add-user.tmpl.html',
+        templateUrl: 'modal/add-user/add-user.tmpl.html',
         controller: 'addUserCtrl',
         size: 'lg'
       }).closed.then(function () {
@@ -36,7 +36,7 @@
         animation: true,
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',
-        templateUrl: 'resources/sms-server/modal/change-password/change-password.tmpl.html',
+        templateUrl: 'modal/change-password/change-password.tmpl.html',
         controller: 'changePasswordCtrl',
         size: 'lg'
       });

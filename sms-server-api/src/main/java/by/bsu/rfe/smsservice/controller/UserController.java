@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Created by pluhin on 3/21/16.
  */
 @Controller
-@RequestMapping(value = "/user", produces = APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/rest/user", produces = APPLICATION_JSON_UTF8_VALUE)
 public class UserController {
 
   @Autowired

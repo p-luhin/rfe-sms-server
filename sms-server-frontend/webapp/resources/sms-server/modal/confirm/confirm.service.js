@@ -12,7 +12,7 @@
       backdrop: true,
       keyboard: true,
       modalFade: true,
-      templateUrl: 'resources/sms-server/modal/confirm/confirm.tmpl.html'
+      templateUrl: 'modal/confirm/confirm.tmpl.html'
     };
 
     var modalOptions = {

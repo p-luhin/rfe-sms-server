@@ -7,61 +7,26 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-/**
- * Created by pluhin on 1/4/17.
- */
+@Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "sms_server_property")
 public class SmsServerPropertyEntity {
 
-    @Id
-    @Column(name = "property_key")
-    @Enumerated(EnumType.STRING)
-    private SmsServerProperty propertyKey;
+  @Id
+  @Column(name = "property_key")
+  @Enumerated(EnumType.STRING)
+  private SmsServerProperty propertyKey;
 
-    @Column(name = "property_group")
-    @Enumerated(EnumType.STRING)
-    private SmsServerProperty.SmsServerPropertyGroup propertyGroup;
+  @Column(name = "property_group")
+  @Enumerated(EnumType.STRING)
+  private SmsServerProperty.SmsServerPropertyGroup propertyGroup;
 
-    @Column(name = "value")
-    private String value;
-
-    public SmsServerPropertyEntity(SmsServerProperty propertyKey, String value) {
-        this.propertyKey = propertyKey;
-        this.value = value;
-    }
-
-    public SmsServerPropertyEntity(SmsServerProperty propertyKey, SmsServerProperty.SmsServerPropertyGroup propertyGroup, String value) {
-        this.propertyKey = propertyKey;
-        this.propertyGroup = propertyGroup;
-        this.value = value;
-    }
-
-    public SmsServerPropertyEntity() {
-    }
-
-    public SmsServerProperty getPropertyKey() {
-        return propertyKey;
-    }
-
-    public void setPropertyKey(SmsServerProperty propertyKey) {
-        this.propertyKey = propertyKey;
-    }
-
-    public SmsServerProperty.SmsServerPropertyGroup getPropertyGroup() {
-        return propertyGroup;
-    }
-
-    public void setPropertyGroup(SmsServerProperty.SmsServerPropertyGroup propertyGroup) {
-        this.propertyGroup = propertyGroup;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
+  @Column(name = "value")
+  private String value;
 }

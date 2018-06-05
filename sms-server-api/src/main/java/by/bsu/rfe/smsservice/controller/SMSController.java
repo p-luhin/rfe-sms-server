@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
 @Controller
-@RequestMapping(produces = APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/rest", produces = APPLICATION_JSON_UTF8_VALUE)
 public class SMSController {
 
   @Autowired

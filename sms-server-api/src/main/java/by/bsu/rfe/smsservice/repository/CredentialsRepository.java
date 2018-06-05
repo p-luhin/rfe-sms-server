@@ -10,15 +10,15 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface CredentialsRepository extends JpaRepository<CredentialsEntity, Integer> {
 
-    @Query("FROM CredentialsEntity ce JOIN ce.users ue WHERE ue.username=?1")
-    CredentialsEntity getDefaultCredentials(String username);
+  @Query("FROM CredentialsEntity ce JOIN ce.users ue WHERE ue.username=?1")
+  CredentialsEntity getDefaultCredentials(String username);
 
-    @Query("FROM CredentialsEntity ce JOIN ce.users ue WHERE ue.username=?1 AND ce.sender=?2")
-    CredentialsEntity getUserCredentialsForSenderName(String username, String senderName);
+  @Query("FROM CredentialsEntity ce JOIN ce.users ue WHERE ue.username=?1 AND ce.sender=?2")
+  CredentialsEntity getUserCredentialsForSenderName(String username, String senderName);
 
-    @Query("FROM CredentialsEntity ce WHERE EXISTS (SELECT usr FROM ce.users usr WHERE usr.username = ?1)")
-    List<CredentialsEntity> getAllUserCredentials(String username);
+  @Query("FROM CredentialsEntity ce WHERE EXISTS (SELECT usr FROM ce.users usr WHERE usr.username = ?1)")
+  List<CredentialsEntity> getAllUserCredentials(String username);
 
-    @Query("FROM CredentialsEntity WHERE sender = ?1")
-    CredentialsEntity getCredentialsForSenderName(String senderName);
+  @Query("FROM CredentialsEntity WHERE sender = ?1")
+  CredentialsEntity getCredentialsForSenderName(String senderName);
 }

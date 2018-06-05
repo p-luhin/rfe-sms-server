@@ -10,12 +10,23 @@ var angularFilesort = require('gulp-angular-filesort');
 const SOURCE_FOLDER = 'webapp/resources';
 const TARGET_FOLDER = './.tmp/META-INF/resources';
 
+//temp solution
 gulp.task('libs-js', function () {
   return gulp.src([SOURCE_FOLDER + '/libs/angular/angular.min.js',
     SOURCE_FOLDER + '/libs/angular/angular-route.min.js',
+    SOURCE_FOLDER + '/libs/angular/angular-cookies.min.js',
+    SOURCE_FOLDER + '/libs/angular/angular-md5.min.js',
+    SOURCE_FOLDER + '/libs/angular/angular-sanitize.min.js',
+    SOURCE_FOLDER + '/libs/angular/ng-tags-input.min.js',
+    SOURCE_FOLDER + '/libs/angular/ngprogress.min.js',
+    SOURCE_FOLDER + '/libs/angular/ngstorage.min.js',
+    SOURCE_FOLDER + '/libs/angular/toaster.min.js',
+    SOURCE_FOLDER + '/libs/angular/ui-bootstrap.min.js',
+    SOURCE_FOLDER + '/libs/angular/ui-bootstrap.tpls.min.js',
+    SOURCE_FOLDER + '/libs/angular/ui-select.min.js',
     SOURCE_FOLDER + '/libs/*/*.js'])
-  .pipe(angularFilesort())
   .pipe(concat('vendors.js'))
+  .pipe(ngAnnotate())
   .pipe(uglify())
   .pipe(gulp.dest(TARGET_FOLDER + '/js'));
 });

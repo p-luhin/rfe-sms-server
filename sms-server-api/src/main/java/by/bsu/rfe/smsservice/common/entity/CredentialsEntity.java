@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -20,14 +21,18 @@ public class CredentialsEntity extends CreationDetails {
 
   @Column(name = "username")
   private String username;
+
   @Column(name = "sender")
   private String sender;
+
   @Column(name = "api_key")
   private String apiKey;
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
-      name = "users_credentials"
+      name = "users_credentials",
+      joinColumns = @JoinColumn(name = "credentials_id"),
+      inverseJoinColumns = @JoinColumn(name = "users_id")
   )
   private Set<UserEntity> users = new HashSet<>();
 }

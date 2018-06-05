@@ -10,11 +10,11 @@
     <uib-tabset active="0">
       <uib-tab index="0" heading="Send Custom SMS" select="showTab(1)">
         <div ng-if="activeTab === 1"
-             ng-include="'/resources/sms-server/send-sms/send-sms-custom-tab.tmpl.html'"></div>
+             ng-include="'send-sms/send-sms-custom-tab.tmpl.html'"></div>
       </uib-tab>
       <uib-tab index="1" heading="Send Bulk SMS" select="showTab(2)">
         <div ng-if="activeTab === 2"
-             ng-include="'/resources/sms-server/send-sms/send-sms-bulk-tab.tmpl.html'"></div>
+             ng-include="'send-sms/send-sms-bulk-tab.tmpl.html'"></div>
       </uib-tab>
     </uib-tabset>
   </div>

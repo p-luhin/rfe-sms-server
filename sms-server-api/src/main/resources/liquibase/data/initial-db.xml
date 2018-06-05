@@ -197,7 +197,7 @@
       <column name="response" type="LONGTEXT"/>
       <column name="sender" type="VARCHAR(255)"/>
       <column name="sent_date" type="datetime(6)"/>
-      <column name="smsType" type="VARCHAR(255)"/>
+      <column name="sms_type" type="VARCHAR(255)"/>
       <column name="text" type="VARCHAR(255)"/>
       <column defaultValue="pavel.luhin@gmail.com" name="initiated_by" type="VARCHAR(255)">
         <constraints nullable="false"/>

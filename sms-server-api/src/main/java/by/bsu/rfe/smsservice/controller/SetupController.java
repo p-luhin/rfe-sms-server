@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * Created by pluhin on 9/3/16.
  */
 @Controller
-@RequestMapping(value = "/setup", produces = APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/rest/setup", produces = APPLICATION_JSON_UTF8_VALUE)
 public class SetupController {
 
   @Autowired

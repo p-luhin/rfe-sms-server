@@ -23,7 +23,7 @@
         animation: true,
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',
-        templateUrl: 'resources/sms-server/modal/add-application/add-application.tmpl.html',
+        templateUrl: 'modal/add-application/add-application.tmpl.html',
         controller: 'addApplicationCtrl',
         size: 'lg'
       }).closed.then(function () {

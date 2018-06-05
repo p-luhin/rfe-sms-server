@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Created by pluhin on 12/27/15.
  */
 @Controller
-@RequestMapping(value = "/statistics", produces = APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/rest/statistics", produces = APPLICATION_JSON_UTF8_VALUE)
 public class StatisticsController {
 
   @Autowired

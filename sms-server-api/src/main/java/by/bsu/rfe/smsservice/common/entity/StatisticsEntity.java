@@ -42,6 +42,6 @@ public class StatisticsEntity extends AbstractPersistable<Integer> {
   @Column(name = "initiated_by")
   private String initiatedBy;
 
-  @Column
+  @Column(name = "smsType")
   private String smsType;
 }

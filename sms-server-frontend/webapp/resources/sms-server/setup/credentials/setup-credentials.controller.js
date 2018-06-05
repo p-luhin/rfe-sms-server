@@ -23,7 +23,7 @@
         animation: true,
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',
-        templateUrl: 'resources/sms-server/modal/add-credentials/add-credentials.tmpl.html',
+        templateUrl: 'modal/add-credentials/add-credentials.tmpl.html',
         controller: 'addCredentialsCtrl',
         size: 'lg'
       }).closed.then(function () {
@@ -53,7 +53,7 @@
         animation: true,
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',
-        templateUrl: 'resources/sms-server/modal/share-credentials/share-credentials.tmpl.html',
+        templateUrl: 'modal/share-credentials/share-credentials.tmpl.html',
         controller: 'shareCredentialsCtrl',
         size: 'lg'
       }).closed.then(function () {

@@ -8,7 +8,7 @@
   routes.$inject = ['$routeProvider'];
 
   function routes($routeProvider) {
-    var SMS_SERVER_DIR = 'resources/sms-server/';
+    var SMS_SERVER_DIR = '';
     var TEMPLATE_POSTFIX = '.tmpl.html';
     $routeProvider
     .when('/statistics', {

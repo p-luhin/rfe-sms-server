@@ -9,54 +9,24 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import lombok.Data;
 
-/**
- * Created by pluhin on 3/20/16.
- */
+@Data
 @Entity
 @Table(name = "user")
 public class UserEntity extends CreationDetails {
-    @Column(name = "username", nullable = false)
-    private String username;
-    @Column(name = "password", nullable = false)
-    private String password;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", nullable = false)
-    private List<AuthenticationTokenEntity> tokens;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "default_credentials")
-    private CredentialsEntity defaultUserCredentials;
+  @Column(name = "username", nullable = false)
+  private String username;
 
-    public String getUsername() {
-        return username;
-    }
+  @Column(name = "password", nullable = false)
+  private String password;
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @JoinColumn(name = "user_id", nullable = false)
+  private List<AuthenticationTokenEntity> tokens;
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public List<AuthenticationTokenEntity> getTokens() {
-        return tokens;
-    }
-
-    public void setTokens(List<AuthenticationTokenEntity> tokens) {
-        this.tokens = tokens;
-    }
-
-    public CredentialsEntity getDefaultUserCredentials() {
-        return defaultUserCredentials;
-    }
-
-    public void setDefaultUserCredentials(CredentialsEntity defaultUserCredentials) {
-        this.defaultUserCredentials = defaultUserCredentials;
-    }
+  @OneToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "default_credentials")
+  private CredentialsEntity defaultUserCredentials;
 }

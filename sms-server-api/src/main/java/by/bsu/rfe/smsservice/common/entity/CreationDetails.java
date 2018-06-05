@@ -14,15 +14,16 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Data
 @MappedSuperclass
 public abstract class CreationDetails extends AbstractPersistable<Integer> {
-    @Column(name = "created_by", nullable = false)
-    private String createdBy;
 
-    @Column(name = "created_date", nullable = false)
-    private Date createdDate;
+  @Column(name = "created_by", nullable = false)
+  private String createdBy;
 
-    @PrePersist
-    public void fillDetails() {
-        createdBy = SecurityUtil.getCurrentUsername();
-        createdDate = new Date();
-    }
+  @Column(name = "created_date", nullable = false)
+  private Date createdDate;
+
+  @PrePersist
+  public void fillDetails() {
+    createdBy = SecurityUtil.getCurrentUsername();
+    createdDate = new Date();
+  }
 }
