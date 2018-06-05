@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 @Configuration
-@ComponentScan("by.bsu.rfe.smsservice.scheduler.**")
 public class SchedulerConfiguration {
 
   @Bean
