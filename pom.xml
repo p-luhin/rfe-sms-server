@@ -39,6 +39,7 @@
     <quartz.version>2.2.3</quartz.version>
     <apache-poi.version>3.14</apache-poi.version>
     <apache-commons-collections.version>4.1</apache-commons-collections.version>
+    <commons-fileupload.version>1.3.3</commons-fileupload.version>
   </properties>
 
   <dependencyManagement>
@@ -67,6 +68,11 @@
         <groupId>org.apache.poi</groupId>
         <artifactId>poi</artifactId>
         <version>${apache-poi.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-fileupload</groupId>
+        <artifactId>commons-fileupload</artifactId>
+        <version>${commons-fileupload.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

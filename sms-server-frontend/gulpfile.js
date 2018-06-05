@@ -11,7 +11,9 @@ const SOURCE_FOLDER = 'webapp/resources';
 const TARGET_FOLDER = './.tmp/META-INF/resources';
 
 gulp.task('libs-js', function () {
-  return gulp.src(SOURCE_FOLDER + '/libs/*/*.js')
+  return gulp.src([SOURCE_FOLDER + '/libs/angular/angular.min.js',
+    SOURCE_FOLDER + '/libs/angular/angular-route.min.js',
+    SOURCE_FOLDER + '/libs/*/*.js'])
   .pipe(angularFilesort())
   .pipe(concat('vendors.js'))
   .pipe(uglify())
@@ -37,13 +39,22 @@ function buildScripts() {
   .pipe(gulp.dest(TARGET_FOLDER + '/js'));
 }
 
-gulp.task('inject', ['libs-js', 'scripts-js', 'templatecache', 'css', 'fonts'], function () {
-  gulp.src('webapp/index.html')
-  .pipe(inject(gulp.src(TARGET_FOLDER + '/js/vendors.js', {read: false}), {ignorePath: '.tmp/META-INF/resources', addRootSlash: false, name: 'head'}))
-  .pipe(inject(gulp.src([TARGET_FOLDER + '/js/app.js', TARGET_FOLDER + '/js/templates.js'], {read: false}), {ignorePath: '.tmp/META-INF/resources', addRootSlash: false}))
-  .pipe(inject(gulp.src(TARGET_FOLDER + '/styles/styles.css'), {ignorePath: '.tmp/META-INF/resources', addRootSlash: false}))
-  .pipe(gulp.dest(TARGET_FOLDER));
-});
+gulp.task('inject', ['libs-js', 'scripts-js', 'templatecache', 'css', 'fonts'],
+    function () {
+      gulp.src('webapp/index.html')
+      .pipe(inject(gulp.src(TARGET_FOLDER + '/js/vendors.js', {read: false}), {
+        ignorePath: '.tmp/META-INF/resources',
+        addRootSlash: false,
+        name: 'head'
+      }))
+      .pipe(inject(gulp.src(
+          [TARGET_FOLDER + '/js/app.js', TARGET_FOLDER + '/js/templates.js'],
+          {read: false}),
+          {ignorePath: '.tmp/META-INF/resources', addRootSlash: false}))
+      .pipe(inject(gulp.src(TARGET_FOLDER + '/styles/styles.css'),
+          {ignorePath: '.tmp/META-INF/resources', addRootSlash: false}))
+      .pipe(gulp.dest(TARGET_FOLDER));
+    });
 
 gulp.task('templatecache', buildTemplates);
 
@@ -65,15 +76,18 @@ function copyFonts() {
 }
 
 gulp.task('watch-styles', function () {
-  return watch('webapp/resources/sms-server/**/*.css', { ignoreInitial: false }, concatCss);
+  return watch('webapp/resources/sms-server/**/*.css', {ignoreInitial: false},
+      concatCss);
 });
 
 gulp.task('watch-scripts', function () {
-  return watch('webapp/resources/sms-server/**/*.js', { ignoreInitial: false }, buildScripts);
+  return watch('webapp/resources/sms-server/**/*.js', {ignoreInitial: false},
+      buildScripts);
 });
 
 gulp.task('watch-templates', function () {
-  return watch('webapp/resources/sms-server/**/*.html', { ignoreInitial: false }, buildTemplates);
+  return watch('webapp/resources/sms-server/**/*.html', {ignoreInitial: false},
+      buildTemplates);
 });
 
 gulp.task('build', ['inject']);
