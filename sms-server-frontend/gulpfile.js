@@ -5,14 +5,15 @@ var ngAnnotate = require('gulp-ng-annotate');
 var tempCache = require('gulp-angular-templatecache');
 var inject = require('gulp-inject');
 var watch = require('gulp-watch');
+var angularFilesort = require('gulp-angular-filesort');
 
 const SOURCE_FOLDER = 'webapp/resources';
 const TARGET_FOLDER = './.tmp/META-INF/resources';
 
 gulp.task('libs-js', function () {
-  return gulp.src([SOURCE_FOLDER + '/libs/angular/angular.min.js', SOURCE_FOLDER + '/libs/**/*.js'])
+  return gulp.src(SOURCE_FOLDER + '/libs/*/*.js')
+  .pipe(angularFilesort())
   .pipe(concat('vendors.js'))
-  .pipe(ngAnnotate())
   .pipe(uglify())
   .pipe(gulp.dest(TARGET_FOLDER + '/js'));
 });
@@ -28,7 +29,8 @@ function concatCss() {
 gulp.task('scripts-js', buildScripts);
 
 function buildScripts() {
-  return gulp.src(['webapp/resources/sms-server/smsserver.js', 'webapp/resources/sms-server/**/*.js'])
+  return gulp.src('webapp/resources/sms-server/**/*.js')
+  .pipe(angularFilesort())
   .pipe(concat('app.js'))
   .pipe(ngAnnotate())
   .pipe(uglify())
