@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html ng-app="sms-server">
+<head>
+	<title>RFE SMS Server</title>
+	<script type="text/javascript" src="resources/libs/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="resources/libs/bootstrap/bootstrap.min.js"></script>
+	<script type="text/javascript" src="resources/libs/angular/angular.min.js"></script>
+	<script type="text/javascript" src="resources/libs/angular/angular-route.min.js"></script>
+	<script type="text/javascript" src="resources/libs/angular/angular-cookies.min.js"></script>
+	<script type="text/javascript" src="resources/libs/angular/angular-sanitize.min.js"></script>
+	<script type="text/javascript" src="resources/libs/angular/ngprogress.min.js"></script>
+	<script type="text/javascript" src="resources/libs/angular/ngstorage.min.js"></script>
+	<script type="text/javascript" src="resources/libs/angular/ui-bootstrap.tpls.min.js"></script>
+	<script type="text/javascript" src="resources/libs/angular/ui-bootstrap.min.js"></script>
+	<script type="text/javascript" src="resources/libs/angular/ng-tags-input.min.js"></script>
+	<script type="text/javascript" src="resources/libs/angular/ui-select.min.js"></script>
+	<script type="text/javascript" src="resources/libs/angular/angular-md5.min.js"></script>
+	<script type="text/javascript" src="resources/libs/angular/toaster.min.js"></script>
+
+	<link rel="stylesheet" href="resources/css/bootstrap.min.css">
+	<link rel="stylesheet" href="resources/css/font-awesome.min.css">
+	<link rel="stylesheet" href="resources/css/common.css">
+	<link rel="stylesheet" href="resources/css/styles.css">
+	<link rel="stylesheet" href="resources/css/setup.css">
+	<link rel="stylesheet" href="resources/css/ng-tags-input.css">
+	<link rel="stylesheet" href="resources/css/ui-select.min.css">
+	<link rel="stylesheet" href="resources/css/select2.css">
+	<link rel="stylesheet" href="resources/css/toaster.min.css">
+
+	<link rel="icon" type="image/png" href="resources/favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="resources/favicon-16x16.png" sizes="16x16" />
+</head>
+<body ng-controller="applicationCtrl">
+	<div ng-show="authenticated" ng-include="'resources/sms-server/common/navbar.tmpl.html'"></div>
+	<div class="col-md-12">
+		<toaster-container toaster-options="{'position-class': 'toast-top-full-width'}"></toaster-container>
+		<ng-view/>
+	</div>
+
+	<script type="text/javascript" src="resources/sms-server/smsserver.js"></script>
+	<script type="text/javascript" src="resources/sms-server/smsserver.run.js"></script>
+	<script type="text/javascript" src="resources/sms-server/smsserver.interceptor.js"></script>
+	<script type="text/javascript" src="resources/sms-server/smsserver.config.js"></script>
+	<script type="text/javascript" src="resources/sms-server/smsserver.routes.js"></script>
+	<script type="text/javascript" src="resources/sms-server/application.service.js"></script>
+	<script type="text/javascript" src="resources/sms-server/application.controller.js"></script>
+	<script type="text/javascript" src="resources/sms-server/common/RestURLFactory.js"></script>
+	<script type="text/javascript" src="resources/sms-server/login/login.service.js"></script>
+	<script type="text/javascript" src="resources/sms-server/login/login.controller.js"></script>
+	<script type="text/javascript" src="resources/sms-server/statistics/statistics.service.js"></script>
+	<script type="text/javascript" src="resources/sms-server/statistics/statistics.controller.js"></script>
+	<script type="text/javascript" src="resources/sms-server/send-sms/send-sms.service.js"></script>
+	<script type="text/javascript" src="resources/sms-server/send-sms/send-sms.controller.js"></script>
+	<script type="text/javascript" src="resources/sms-server/recipients/groups/groups.service.js"></script>
+	<script type="text/javascript" src="resources/sms-server/recipients/groups/groups.controller.js"></script>
+	<script type="text/javascript" src="resources/sms-server/recipients/groups/add-group/add-group.service.js"></script>
+	<script type="text/javascript" src="resources/sms-server/recipients/groups/add-group/add-group.controller.js"></script>
+	<script type="text/javascript" src="resources/sms-server/recipients/persons/persons.service.js"></script>
+	<script type="text/javascript" src="resources/sms-server/recipients/persons/persons.controller.js"></script>
+	<script type="text/javascript" src="resources/sms-server/recipients/persons/add-persons/add-persons.service.js"></script>
+	<script type="text/javascript" src="resources/sms-server/recipients/persons/add-persons/add-persons.controller.js"></script>
+	<script type="text/javascript" src="resources/sms-server/setup/setup.service.js"></script>
+	<script type="text/javascript" src="resources/sms-server/setup/setup.controller.js"></script>
+	<script type="text/javascript" src="resources/sms-server/setup/applications/setup-applications.service.js"></script>
+	<script type="text/javascript" src="resources/sms-server/setup/applications/setup-applications.controller.js"></script>
+	<script type="text/javascript" src="resources/sms-server/setup/credentials/setup-credentials.service.js"></script>
+	<script type="text/javascript" src="resources/sms-server/setup/credentials/setup-credentials.controller.js"></script>
+	<script type="text/javascript" src="resources/sms-server/setup/emailTemplates/setup-emailTemplates.service.js"></script>
+	<script type="text/javascript" src="resources/sms-server/setup/emailTemplates/setup-emailTemplates.controller.js"></script>
+	<script type="text/javascript" src="resources/sms-server/setup/properties/setup-properties.service.js"></script>
+	<script type="text/javascript" src="resources/sms-server/setup/properties/setup-properties.controller.js"></script>
+	<script type="text/javascript" src="resources/sms-server/setup/templates/setup-templates.service.js"></script>
+	<script type="text/javascript" src="resources/sms-server/setup/templates/setup-templates.controller.js"></script>
+	<script type="text/javascript" src="resources/sms-server/setup/users/setup-users.service.js"></script>
+	<script type="text/javascript" src="resources/sms-server/setup/users/setup-users.controller.js"></script>
+	<script type="text/javascript" src="resources/sms-server/sms-queue/sms-queue.service.js"></script>
+	<script type="text/javascript" src="resources/sms-server/sms-queue/sms-queue.controller.js"></script>
+	<script type="text/javascript" src="resources/sms-server/modal/confirm/confirm.service.js"></script>
+	<script type="text/javascript" src="resources/sms-server/modal/add-application/add-application.service.js"></script>
+	<script type="text/javascript" src="resources/sms-server/modal/add-application/add-application.controller.js"></script>
+	<script type="text/javascript" src="resources/sms-server/modal/add-credentials/add-credentials.service.js"></script>
+	<script type="text/javascript" src="resources/sms-server/modal/add-credentials/add-credentials.controller.js"></script>
+	<script type="text/javascript" src="resources/sms-server/modal/add-emailtemplate/add-emailtemplate.service.js"></script>
+	<script type="text/javascript" src="resources/sms-server/modal/add-emailtemplate/add-emailtemplate.controller.js"></script>
+	<script type="text/javascript" src="resources/sms-server/modal/add-template/add-template.service.js"></script>
+	<script type="text/javascript" src="resources/sms-server/modal/add-template/add-template.controller.js"></script>
+	<script type="text/javascript" src="resources/sms-server/modal/add-user/add-user.service.js"></script>
+	<script type="text/javascript" src="resources/sms-server/modal/add-user/add-user.controller.js"></script>
+	<script type="text/javascript" src="resources/sms-server/modal/change-password/change-password.service.js"></script>
+	<script type="text/javascript" src="resources/sms-server/modal/change-password/change-password.controller.js"></script>
+	<script type="text/javascript" src="resources/sms-server/modal/share-credentials/share-credentials.service.js"></script>
+	<script type="text/javascript" src="resources/sms-server/modal/share-credentials/share-credentials.controller.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+<div ng-include="'resources/sms-server/setup/setup-backToSetupLink.tmpl.html'"></div>
+<div class="col-md-offset-2 col-md-8">
+    <h3>Email Templates</h3>
+    <a href class="pull-right" ng-click="addEmailTemplateModal()">Add new Email template</a>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Expand</th>
+            <th>SMS Type</th>
+            <th>Created By</th>
+            <th>Created Date</th>
+            <th>Remove</th>
+        </tr>
+        </thead>
+        <tbody ng-repeat="emailTemplate in emailTemplates">
+        <tr>
+            <td class="clickable" ng-show="!emailTemplate.expanded" ng-click="emailTemplate.expanded = true">+</td>
+            <td class="clickable" ng-show="emailTemplate.expanded" ng-click="emailTemplate.expanded = false">-</td>
+            <td>{{emailTemplate.smsType}}</td>
+            <td>{{emailTemplate.createdBy}}</td>
+            <td>{{emailTemplate.createdDate | date: 'medium'}}</td>
+            <td ng-if="emailTemplate.createdBy != 'SYSTEM'"><i class="fa fa-remove clickable" ng-click="removeEmailTemplate(emailTemplate.id)"></i></td>
+        </tr>
+        <tr class="expandable table-condensed" ng-show="emailTemplate.expanded">
+            <td><b>Subject:</b></td>
+            <td colspan="6">{{emailTemplate.subject}}</td>
+        </tr>
+        <tr class="expandable table-condensed" ng-show="emailTemplate.expanded">
+            <td><b>Template:</b></td>
+            <td colspan="6" ng-bind-html-unsafe="emailTemplate.content">{{emailTemplate.content}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

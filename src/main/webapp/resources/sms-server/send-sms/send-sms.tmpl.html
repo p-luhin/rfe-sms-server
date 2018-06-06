@@ -1,0 +1,26 @@
+<div class="col-md-offset-2 col-md-8">
+    <h3>Select sender name:</h3>
+    <select
+            style="margin-bottom: 30px"
+            class="sender-names"
+            ng-model="requestSenderName"
+            ng-options="senderName for senderName in senderNames">
+    </select>
+    <div class="sms-tabs">
+        <uib-tabset active="0">
+            <uib-tab index="0" heading="Send Custom SMS" select="showTab(1)">
+                <div ng-if="activeTab === 1" ng-include="'/resources/sms-server/send-sms/send-sms-custom-tab.tmpl.html'"></div>
+            </uib-tab>
+            <uib-tab index="1" heading="Send Bulk SMS" select="showTab(2)">
+                <div ng-if="activeTab === 2" ng-include="'/resources/sms-server/send-sms/send-sms-bulk-tab.tmpl.html'"></div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+</div>
+
+<script type="text/ng-template" id="autocomplete-template">
+    <div class="center-block">
+        <span>{{data.name}}</span>
+        <span>({{data.recipientType}})</span>
+    </div>
+</script>

@@ -1,0 +1,14 @@
+<div class="modal-header" id="modal-header">
+    <h3 class="modal-title">Add new SMS Template</h3>
+</div>
+
+<div class="modal-body" id="modal-body">
+    <input type="text" ng-model="template.smsType" class="input-field" placeholder="SMS Type">
+
+    <textarea class="sms-content-textarea" ng-model="template.template" placeholder="SMS Template. Can be blank"></textarea>
+</div>
+
+<div class="modal-footer" id="modal-footer">
+    <input type="button" class="input-submit" value="Cancel" ng-click="cancel()">
+    <input type="button" class="input-submit" value="Add" ng-click="addTemplate(template)">
+</div>

@@ -1,0 +1,27 @@
+<div ng-include="'resources/sms-server/setup/setup-backToSetupLink.tmpl.html'"></div>
+<div class="col-md-offset-2 col-md-8">
+    <select
+            style="margin-bottom: 30px"
+            class="sender-names"
+            ng-model="selectedPropertyGroup"
+            ng-options="propertyGroup for propertyGroup in propertyGroups"
+            ng-change="selectGroup()">
+    </select>
+</div>
+<div class="col-md-offset-2 col-md-8" style="padding-top: 30px">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th class="text-center">Value</th>
+            </tr>
+        </thead>
+        <tbody ng-repeat="(key, value) in properties track by $index">
+            <tr>
+                <td>{{key}}</td>
+                <td class="text-center"><input class="input-field small-input-field text-center" type="text" ng-model="properties[key]" ng-value="properties[key]"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<input type="submit" class="input-submit" value="Save" ng-click="saveProperties(properties)">

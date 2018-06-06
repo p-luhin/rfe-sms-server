@@ -1,0 +1,13 @@
+<form ng-submit="sendSMS(sms)">
+  <div>
+    <tags-input display-property="name" placeholder="Search by recipients and groups" ng-model="sms.recipient">
+      <auto-complete source="loadRecipients($query)" load-on-focus="true"
+                     template="autocomplete-template"></auto-complete>
+    </tags-input>
+  </div>
+        <textarea placeholder="Message content" class="sms-content-textarea" ng-change="countSymbols()"
+                  ng-model="sms.content"></textarea>
+    <p ng-show="smsCount > 1" class="sms-content-status">{{smsCount}} sms&nbsp;</p>
+    <p class="sms-content-status">{{symbolsLeft}} symbols left</p>
+    <input type="submit" class="input-submit" value="Send SMS">
+</form>

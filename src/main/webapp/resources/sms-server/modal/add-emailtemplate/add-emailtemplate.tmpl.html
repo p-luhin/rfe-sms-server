@@ -1,0 +1,19 @@
+<div class="modal-header" id="modal-header">
+    <h3 class="modal-title">Add new Email Template</h3>
+</div>
+
+<div class="modal-body" id="modal-body">
+    <ui-select ng-model="template.smsType" theme="bootstrap">
+        <ui-select-match placeholder="Start enter Sms Type">{{$select.selected}}</ui-select-match>
+        <ui-select-choices repeat="smsType in smsTypes | filter: $select.search track by smsType">{{smsType}}</ui-select-choices>
+    </ui-select>
+    <br>
+    <input type="text" ng-model="template.subject" class="input-field" placeholder="Subject">
+
+    <textarea class="sms-content-textarea" ng-model="template.content" placeholder="Email Template"></textarea>
+</div>
+
+<div class="modal-footer" id="modal-footer">
+    <input type="button" class="input-submit" value="Cancel" ng-click="cancel()">
+    <input type="button" class="input-submit" value="Add" ng-click="addTemplate(template)">
+</div>
