@@ -18,7 +18,7 @@
 
       loginService.logIn(user).then(
           function (response) {
-            loginService.setAuthentication(response.data);
+            loginService.setAuthentication();
             $location.path('/statistics');
             progress.complete();
           }, function (reason) {

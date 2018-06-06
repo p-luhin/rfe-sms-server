@@ -9,6 +9,7 @@ var angularFilesort = require('gulp-angular-filesort');
 
 const SOURCE_FOLDER = 'webapp/resources';
 const TARGET_FOLDER = './.tmp/META-INF/resources';
+const TARGET_WATCHER_FOLDER = 'target/classes/META-INF/resources';
 
 //temp solution
 gulp.task('libs-js', function () {
@@ -33,21 +34,21 @@ gulp.task('libs-js', function () {
 
 gulp.task('css', concatCss);
 
-function concatCss() {
+function concatCss(target) {
   return gulp.src('webapp/**/*.css')
   .pipe(concat('styles.css'))
-  .pipe(gulp.dest(TARGET_FOLDER + '/styles'));
+  .pipe(gulp.dest((target || TARGET_FOLDER) + '/styles'));
 }
 
 gulp.task('scripts-js', buildScripts);
 
-function buildScripts() {
+function buildScripts(target) {
   return gulp.src('webapp/resources/sms-server/**/*.js')
   .pipe(angularFilesort())
   .pipe(concat('app.js'))
   .pipe(ngAnnotate())
   .pipe(uglify())
-  .pipe(gulp.dest(TARGET_FOLDER + '/js'));
+  .pipe(gulp.dest((target || TARGET_FOLDER) + '/js'));
 }
 
 gulp.task('inject', ['libs-js', 'scripts-js', 'templatecache', 'css', 'fonts'],
@@ -69,14 +70,14 @@ gulp.task('inject', ['libs-js', 'scripts-js', 'templatecache', 'css', 'fonts'],
 
 gulp.task('templatecache', buildTemplates);
 
-function buildTemplates() {
+function buildTemplates(target) {
   return gulp.src('webapp/resources/sms-server/**/*.html')
   .pipe(tempCache(
       'templates.js', {
         module: 'sms-server',
         standAlone: false
       }))
-  .pipe(gulp.dest(TARGET_FOLDER + '/js/'));
+  .pipe(gulp.dest((target || TARGET_FOLDER) + '/js/'));
 }
 
 gulp.task('fonts', copyFonts);
@@ -86,19 +87,31 @@ function copyFonts() {
   .pipe(gulp.dest(TARGET_FOLDER + '/fonts/'));
 }
 
+function watchStyles() {
+  concatCss(TARGET_WATCHER_FOLDER);
+}
+
+function watchScripts() {
+  buildScripts(TARGET_WATCHER_FOLDER);
+}
+
+function watchTemplates() {
+  buildTemplates(TARGET_WATCHER_FOLDER);
+}
+
 gulp.task('watch-styles', function () {
   return watch('webapp/resources/sms-server/**/*.css', {ignoreInitial: false},
-      concatCss);
+      watchStyles);
 });
 
 gulp.task('watch-scripts', function () {
   return watch('webapp/resources/sms-server/**/*.js', {ignoreInitial: false},
-      buildScripts);
+      watchScripts);
 });
 
 gulp.task('watch-templates', function () {
   return watch('webapp/resources/sms-server/**/*.html', {ignoreInitial: false},
-      buildTemplates);
+      watchTemplates);
 });
 
 gulp.task('build', ['inject']);

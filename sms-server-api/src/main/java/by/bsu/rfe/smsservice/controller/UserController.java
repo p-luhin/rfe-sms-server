@@ -29,21 +29,9 @@ public class UserController {
   @Autowired
   private UserService userService;
 
-  @PostMapping(value = "/authenticate", consumes = APPLICATION_JSON_UTF8_VALUE)
-  public ResponseEntity<UserDTO> authenticate(@RequestBody AuthenticationDTO authenticationDTO) {
-    return ok(userService.authenticate(authenticationDTO));
-  }
-
   @PostMapping(value = "/validateToken", consumes = APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<UserDTO> validateToken(@RequestBody String token) {
     return ok(userService.validateToken(token));
-  }
-
-  @PostMapping("/logout")
-  public ResponseEntity logout(HttpServletRequest request, HttpServletResponse response) {
-    String token = SecurityUtil.getUserAuthToken(request);
-    userService.logout(request, response, token);
-    return noContent().build();
   }
 
   @GetMapping("/senderNames")

@@ -20,15 +20,18 @@
     };
 
     function logIn(user) {
-      return $http.post(RestURLFactory.AUTHENTICATE, user);
+      var data = 'j_username=' + encodeURIComponent(user.username) +
+          '&j_password=' + encodeURIComponent(user.password);
+
+      return $http.post(RestURLFactory.AUTHENTICATE, data, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      });
     }
 
-    function setAuthentication(authentication) {
-      $cookies.put(cookieName, authentication.token);
+    function setAuthentication() {
       $rootScope.authenticated = true;
-      authentication.authenticated = true;
-      localStorage.setItem(localStorageAuthName,
-          JSON.stringify(authentication));
     }
 
     function logout() {
@@ -41,16 +44,7 @@
     }
 
     function isAuthenticated() {
-      if ($rootScope.authenticated != undefined) {
-        return $rootScope.authenticated;
-      } else {
-        var auth = JSON.parse(localStorage.getItem(localStorageAuthName));
-        if (auth != undefined) {
-          return auth.authenticated;
-        } else {
-          return false;
-        }
-      }
+      return $rootScope.authenticated;
     }
 
     function getCurrentUserName() {
