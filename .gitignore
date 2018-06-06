@@ -1,3 +1,8 @@
 .idea
 /target/
 *.iml
+.tmp
+node_modules
+package-lock.json
+node
+npm-debug.log

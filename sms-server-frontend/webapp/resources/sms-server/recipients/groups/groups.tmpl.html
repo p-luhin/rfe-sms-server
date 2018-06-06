@@ -1,0 +1,37 @@
+<div id="groups" ng-controller="groupsCtrl">
+  <label>Groups:</label>
+  <input type="text" class="input-field" placeholder="Filter by Group name" ng-model="groupFilter">
+  <table class="table">
+    <thead>
+    <tr>
+      <th class="clickable" ng-click="sortBy('name')">Group name <i
+          class="{{sortOrder.name.elementClass}}"></i></th>
+      <th>Recipients count</th>
+      <th>Edit</th>
+      <th>Remove</th>
+      <th class="pull-right">Total: {{count}}</th>
+    </tr>
+    </thead>
+    <tbody ng-repeat="group in receivedGroups">
+    <tr>
+      <td>{{group.name}}</td>
+      <td>{{group.persons.length}}</td>
+      <td><i class="glyphicon glyphicon-edit clickable" ng-click="editGroup(group.id)"></i></td>
+      <td colspan="2"><i class="fa fa-remove clickable" ng-click="removeGroup(group.id)"></i></td>
+    </tr>
+    </tbody>
+  </table>
+  <ul class="pagination" ng-repeat="page in pages">
+    <li class="clickable" ng-class="{active: page.active}"><a ng-click="getPage(page.pageNumber)">{{page.pageNumber}}</a>
+    </li>
+  </ul>
+
+  <ul class="pull-right pagination">
+    <li class="clickable" ng-class="{active: pageSize.ten.active}"><a
+        ng-click="changePageSize(pageSize.ten)">{{pageSize.ten.display}}</a></li>
+    <li class="clickable" ng-class="{active: pageSize.fifteen.active}"><a
+        ng-click="changePageSize(pageSize.fifteen)">{{pageSize.fifteen.display}}</a></li>
+    <li class="clickable" ng-class="{active: pageSize.fifty.active}"><a
+        ng-click="changePageSize(pageSize.fifty)">{{pageSize.fifty.display}}</a></li>
+  </ul>
+</div>

@@ -1,0 +1,19 @@
+<div>
+  <h1>Add new persons</h1>
+  <form ng-submit="addPersons(persons)">
+    <div ng-repeat="person in persons">
+      <input class="input-field small-input-field" type="text" ng-model="person.firstName"
+             placeholder="First Name">
+      <input class="input-field small-input-field" type="text" ng-model="person.lastName"
+             placeholder="Last Name">
+      <input class="input-field small-input-field" type="text" ng-model="person.phoneNumber"
+             placeholder="Phone">
+      <input class="input-field small-input-field" type="text" ng-model="person.email"
+             placeholder="Email">
+      <input class="input-submit" ng-click="addNewPersonForm()" type="button" value="Add more">
+      <input style="margin-right: 10px;" ng-click="removePersonForm($index)" class="input-submit"
+             type="button" value="Remove">
+    </div>
+    <input type="submit" class="input-submit" value="Save All">
+  </form>
+</div>

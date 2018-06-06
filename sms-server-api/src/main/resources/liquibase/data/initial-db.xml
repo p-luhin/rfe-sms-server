@@ -1,0 +1,440 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+  <changeSet author="pluhin (generated)" id="1523710819284-1">
+    <createTable tableName="authentication_token">
+      <column autoIncrement="true" name="id" type="INT">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="expires" type="datetime(6)"/>
+      <column name="token" type="VARCHAR(255)"/>
+      <column name="user_id" type="INT">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-2">
+    <createTable tableName="credentials">
+      <column autoIncrement="true" name="id" type="INT">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="username" type="VARCHAR(255)"/>
+      <column name="sender" type="VARCHAR(255)"/>
+      <column name="api_key" type="VARCHAR(255)"/>
+      <column name="created_by" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="datetime(6)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-3">
+    <createTable tableName="email_template">
+      <column autoIncrement="true" name="id" type="INT">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="created_by" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="datetime(6)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="content" type="LONGTEXT"/>
+      <column name="subject" type="VARCHAR(255)"/>
+      <column name="sms_template" type="INT"/>
+    </createTable>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-4">
+    <createTable tableName="external_application">
+      <column autoIncrement="true" name="id" type="INT">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="created_by" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="datetime(6)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="application_name" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="authentication" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="default_credentials" type="INT"/>
+    </createTable>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-5">
+    <createTable tableName="person">
+      <column autoIncrement="true" name="id" type="INT">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="email" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="first_name" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_name" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="phone_number" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="datetime(6)">
+        <constraints nullable="false"/>
+      </column>
+      <column defaultValueBoolean="false" name="temporary" type="BIT(1)"/>
+    </createTable>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-6">
+    <createTable tableName="persons_have_groups">
+      <column name="person_id" type="INT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="group_id" type="INT">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-7">
+    <createTable tableName="recipient_group">
+      <column autoIncrement="true" name="id" type="INT">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="name" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="datetime(6)">
+        <constraints nullable="false"/>
+      </column>
+      <column defaultValueBoolean="false" name="temporary" type="BIT(1)"/>
+    </createTable>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-8">
+    <createTable tableName="sms_queue">
+      <column autoIncrement="true" name="id" type="INT">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="recipient" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="recipient_type" type="ENUM('PERSON', 'NUMBER', 'GROUP')">
+        <constraints nullable="false"/>
+      </column>
+      <column name="message" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="credentials_id" type="INT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="datetime(6)">
+        <constraints nullable="false"/>
+      </column>
+      <column defaultValueBoolean="false" name="duplicate_email" type="BIT(1)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="initiated_by" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="parameters_json" type="BLOB"/>
+      <column name="sms_type" type="VARCHAR(255)"/>
+    </createTable>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-9">
+    <createTable tableName="sms_server_property">
+      <column name="property_key" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="value" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column defaultValue="UNASSIGNED" name="property_group" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-10">
+    <createTable tableName="sms_template">
+      <column autoIncrement="true" name="id" type="INT">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="sms_type" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="template" type="LONGTEXT"/>
+      <column name="created_by" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="datetime(6)">
+        <constraints nullable="false"/>
+      </column>
+      <column defaultValueNumeric="1" name="enabled" type="TINYINT(3)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-11">
+    <createTable tableName="statistics">
+      <column autoIncrement="true" name="id" type="INT">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="error" type="BIT(1)"/>
+      <column name="recipient" type="VARCHAR(255)"/>
+      <column name="recipient_type" type="VARCHAR(255)"/>
+      <column name="response" type="LONGTEXT"/>
+      <column name="sender" type="VARCHAR(255)"/>
+      <column name="sent_date" type="datetime(6)"/>
+      <column name="sms_type" type="VARCHAR(255)"/>
+      <column name="text" type="VARCHAR(255)"/>
+      <column defaultValue="pavel.luhin@gmail.com" name="initiated_by" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-12">
+    <createTable tableName="user">
+      <column autoIncrement="true" name="id" type="INT">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="username" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="password" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="default_credentials" type="INT"/>
+      <column name="created_by" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="datetime(6)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-13">
+    <createTable tableName="users_credentials">
+      <column name="credentials_id" type="INT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="users_id" type="INT">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-14">
+    <addUniqueConstraint columnNames="application_name" constraintName="application_name"
+      tableName="external_application"/>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-15">
+    <addUniqueConstraint columnNames="property_key" constraintName="key"
+      tableName="sms_server_property"/>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-16">
+    <addUniqueConstraint columnNames="name" constraintName="name" tableName="recipient_group"/>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-17">
+    <addUniqueConstraint columnNames="sender" constraintName="sender" tableName="credentials"/>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-18">
+    <addUniqueConstraint columnNames="sms_type" constraintName="sms_type" tableName="sms_template"/>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-19">
+    <addUniqueConstraint columnNames="username" constraintName="username" tableName="user"/>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-20">
+    <createIndex indexName="app_default_creds" tableName="external_application">
+      <column name="default_credentials"/>
+    </createIndex>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-21">
+    <createIndex indexName="creds_fk" tableName="sms_queue">
+      <column name="credentials_id"/>
+    </createIndex>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-22">
+    <createIndex indexName="def_creds_key" tableName="user">
+      <column name="default_credentials"/>
+    </createIndex>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-23">
+    <createIndex indexName="group_fk" tableName="persons_have_groups">
+      <column name="group_id"/>
+    </createIndex>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-24">
+    <createIndex indexName="person_fk" tableName="persons_have_groups">
+      <column name="person_id"/>
+    </createIndex>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-25">
+    <createIndex indexName="template_fk" tableName="email_template">
+      <column name="sms_template"/>
+    </createIndex>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-26">
+    <createIndex indexName="token_user_fk" tableName="authentication_token">
+      <column name="user_id"/>
+    </createIndex>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-27">
+    <createIndex indexName="user_cred_fk" tableName="users_credentials">
+      <column name="credentials_id"/>
+    </createIndex>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-28">
+    <createIndex indexName="user_user_fk" tableName="users_credentials">
+      <column name="users_id"/>
+    </createIndex>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-29">
+    <addForeignKeyConstraint baseColumnNames="default_credentials"
+      baseTableName="external_application" constraintName="app_default_creds" deferrable="false"
+      initiallyDeferred="false" onDelete="SET NULL" onUpdate="NO ACTION" referencedColumnNames="id"
+      referencedTableName="credentials"/>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-30">
+    <addForeignKeyConstraint baseColumnNames="credentials_id" baseTableName="sms_queue"
+      constraintName="creds_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+      onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="credentials"/>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-31">
+    <addForeignKeyConstraint baseColumnNames="default_credentials" baseTableName="user"
+      constraintName="def_creds_key" deferrable="false" initiallyDeferred="false"
+      onDelete="SET NULL" onUpdate="NO ACTION" referencedColumnNames="id"
+      referencedTableName="credentials"/>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-32">
+    <addForeignKeyConstraint baseColumnNames="group_id" baseTableName="persons_have_groups"
+      constraintName="group_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+      onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="recipient_group"/>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-33">
+    <addForeignKeyConstraint baseColumnNames="person_id" baseTableName="persons_have_groups"
+      constraintName="person_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+      onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="person"/>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-34">
+    <addForeignKeyConstraint baseColumnNames="sms_template" baseTableName="email_template"
+      constraintName="template_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+      onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="sms_template"/>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-35">
+    <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="authentication_token"
+      constraintName="token_user_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+      onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user"/>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-36">
+    <addForeignKeyConstraint baseColumnNames="credentials_id" baseTableName="users_credentials"
+      constraintName="user_cred_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+      onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="credentials"/>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1523710819284-37">
+    <addForeignKeyConstraint baseColumnNames="users_id" baseTableName="users_credentials"
+      constraintName="user_user_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+      onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user"/>
+  </changeSet>
+
+  <changeSet author="pluhin (generated)" id="1524652973277-1">
+    <insert tableName="email_template">
+      <column name="id" valueNumeric="1"/>
+      <column name="created_by" value="SYSTEM"/>
+      <column name="created_date" valueDate="2018-04-25 12:58:57.0"/>
+      <column name="content" value="Hello ${USERNAME},&lt;br&gt;&lt;br&gt;Your account on SMS-Server was successfully registered.&lt;br&gt;&#10;                                                                                               SMS-Server address is: ${SERVER.URL}&lt;br&gt;&#10;                                                                                               User the following credentials to log in:&lt;br&gt;&#10;                                                                                               &lt;b&gt;Username:&lt;/b&gt; ${EMAIL},&lt;br&gt;&lt;b&gt;Password&lt;/b&gt;: ${PASSWORD}."/>
+      <column name="subject" value="Your account on SMS-Server was registered"/>
+      <column name="sms_template"/>
+    </insert>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1524652973277-2">
+    <insert tableName="sms_server_property">
+      <column name="property_key" value="AUTHENTICATION_ENABLED"/>
+      <column name="value" value=""/>
+      <column name="property_group" value="EMAIL"/>
+    </insert>
+    <insert tableName="sms_server_property">
+      <column name="property_key" value="EMAIL_ENABLED"/>
+      <column name="value" value="false"/>
+      <column name="property_group" value="EMAIL"/>
+    </insert>
+    <insert tableName="sms_server_property">
+      <column name="property_key" value="MUTE_ENABLED"/>
+      <column name="value" value="false"/>
+      <column name="property_group" value="MUTE_MODE"/>
+    </insert>
+    <insert tableName="sms_server_property">
+      <column name="property_key" value="MUTE_END_TIME"/>
+      <column name="value" value="00:00"/>
+      <column name="property_group" value="MUTE_MODE"/>
+    </insert>
+    <insert tableName="sms_server_property">
+      <column name="property_key" value="MUTE_START_TIME"/>
+      <column name="value" value="00:00"/>
+      <column name="property_group" value="MUTE_MODE"/>
+    </insert>
+    <insert tableName="sms_server_property">
+      <column name="property_key" value="PASSWORD"/>
+      <column name="value" value=""/>
+      <column name="property_group" value="EMAIL"/>
+    </insert>
+    <insert tableName="sms_server_property">
+      <column name="property_key" value="SMTP_HOST"/>
+      <column name="value" value=""/>
+      <column name="property_group" value="EMAIL"/>
+    </insert>
+    <insert tableName="sms_server_property">
+      <column name="property_key" value="SMTP_PORT"/>
+      <column name="value" value=""/>
+      <column name="property_group" value="EMAIL"/>
+    </insert>
+    <insert tableName="sms_server_property">
+      <column name="property_key" value="TLS_ENABLED"/>
+      <column name="value" value=""/>
+      <column name="property_group" value="EMAIL"/>
+    </insert>
+    <insert tableName="sms_server_property">
+      <column name="property_key" value="USERNAME"/>
+      <column name="value" value=""/>
+      <column name="property_group" value="EMAIL"/>
+    </insert>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1524652973277-3">
+    <insert tableName="sms_template">
+      <column name="id" valueNumeric="1"/>
+      <column name="sms_type" value="CustomSMS"/>
+      <column name="template"/>
+      <column name="created_by" value="SYSTEM"/>
+      <column name="created_date" valueDate="2018-04-25 12:58:57.0"/>
+      <column name="enabled" valueNumeric="0"/>
+    </insert>
+    <insert tableName="sms_template">
+      <column name="id" valueNumeric="2"/>
+      <column name="sms_type" value="RegisterUserSMS"/>
+      <column name="template"/>
+      <column name="created_by" value="SYSTEM"/>
+      <column name="created_date" valueDate="2018-04-25 12:58:57.0"/>
+      <column name="enabled" valueNumeric="0"/>
+    </insert>
+  </changeSet>
+  <changeSet author="pluhin (generated)" id="1524652973277-4">
+    <insert tableName="user">
+      <column name="id" valueNumeric="1"/>
+      <column name="username" value="pavel.luhin@gmail.com"/>
+      <column name="password" value="42d8aa7cde9c78c4757862d84620c335"/>
+      <column name="default_credentials"/>
+      <column name="created_by" value="SYSTEM"/>
+      <column name="created_date" valueDate="2018-04-25 12:58:57.0"/>
+    </insert>
+  </changeSet>
+</databaseChangeLog>

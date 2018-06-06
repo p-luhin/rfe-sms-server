@@ -1,0 +1,13 @@
+<div class="recipients-and-groups">
+  <div style="margin-bottom: 50px; float: right">
+    <a class="btn btn-default" role="button" href="#/recipients/add">Add new recipient</a>
+    <a class="btn btn-default" style="margin-right: 50px" href="#/recipients/add-group">Add new
+      group</a>
+  </div>
+  <div style="clear: both">
+    <div ng-include="'recipients/persons/persons.tmpl.html'"
+         class="col-md-6"></div>
+    <div ng-include="'recipients/groups/groups.tmpl.html'"
+         class="col-md-6"></div>
+  </div>
+</div>

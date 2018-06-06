@@ -1,0 +1,36 @@
+<div ng-include="'setup/setup-backToSetupLink.tmpl.html'"></div>
+<div class="col-md-offset-2 col-md-8">
+  <h3>SMS Templates</h3>
+  <a href class="pull-right" ng-click="addSMSTemplateModal()">Add new SMS template</a>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Expand</th>
+      <th>SMS Type</th>
+      <th>Created By</th>
+      <th>Created Date</th>
+      <th>Remove</th>
+    </tr>
+    </thead>
+    <tbody ng-repeat="smsTemplate in smsTemplates">
+    <tr>
+      <td class="clickable" ng-show="!smsTemplate.expanded" ng-click="smsTemplate.expanded = true">
+        +
+      </td>
+      <td class="clickable" ng-show="smsTemplate.expanded" ng-click="smsTemplate.expanded = false">
+        -
+      </td>
+      <td>{{smsTemplate.smsType}}</td>
+      <td>{{smsTemplate.createdBy}}</td>
+      <td>{{smsTemplate.createdDate | date: 'medium'}}</td>
+      <td ng-if="smsTemplate.createdBy != 'SYSTEM'"><i class="fa fa-remove clickable"
+                                                       ng-click="removeSMSTemplate(smsTemplate.id)"></i>
+      </td>
+    </tr>
+    <tr class="expandable table-condensed" ng-show="smsTemplate.expanded">
+      <td><b>Template:</b></td>
+      <td colspan="6">{{smsTemplate.template}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
