@@ -7,9 +7,6 @@ import java.util.Collection;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
-/**
- * Created by pluhin on 7/12/17.
- */
 public class ApplicationAuthentication implements Authentication {
 
   private String applicationName;

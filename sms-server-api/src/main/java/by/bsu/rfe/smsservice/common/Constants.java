@@ -18,7 +18,9 @@ public interface Constants {
 
   String ROLE_USER = "ROLE_USER";
   String ROLE_APPLICATION = "ROLE_APPLICATION";
+  String ROLE_ACTUATOR = "ROLE_ACTUATOR";
 
   GrantedAuthority USER_AUTHORITY = new SimpleGrantedAuthority(ROLE_USER);
   GrantedAuthority APPLICATION_AUTHORITY = new SimpleGrantedAuthority(ROLE_APPLICATION);
+  GrantedAuthority ACTUATOR_AUTHORITY = new SimpleGrantedAuthority(ROLE_ACTUATOR);
 }

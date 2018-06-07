@@ -1,7 +1,8 @@
 package by.bsu.rfe.smsservice.security.common;
 
+import static by.bsu.rfe.smsservice.common.Constants.ACTUATOR_AUTHORITY;
 import static by.bsu.rfe.smsservice.common.Constants.USER_AUTHORITY;
-import static java.util.Collections.singletonList;
+import static java.util.Arrays.asList;
 
 import java.util.Collection;
 import lombok.AllArgsConstructor;
@@ -12,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AllArgsConstructor
 public class SmsServerUserDetails implements UserDetails {
 
-  private final Collection authorities = singletonList(USER_AUTHORITY);
+  private final Collection authorities = asList(USER_AUTHORITY, ACTUATOR_AUTHORITY);
 
   private String username;
   private String password;
