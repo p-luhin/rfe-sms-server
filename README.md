@@ -29,5 +29,6 @@ Then you need to specify the following environment variables for the application
 * ```-Ddatabase.password``` - password of database user. In this example ```some-password```
 * ```-Dsms.test``` - in older versions test flag, send real or mock request to websms system. Deprecated. Use build profiles instead.
 * ```-Dserver.url``` - server domain or IP address with port where application is going to be deployed. Needed to send in email to newly registered users.
+* ```-Dcredentials.cache.enabled``` - in older versions flat to enable or disable credentials cache. Deprecated since version 1.4. Credentials cache is active by default now.
 
 After installing, you have execute jar file named ```sms-server-X.jar```, where X - application version from ```target``` folder.
