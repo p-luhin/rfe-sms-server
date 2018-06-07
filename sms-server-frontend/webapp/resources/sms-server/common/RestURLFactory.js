@@ -27,7 +27,8 @@ angular.module('sms-server').factory('RestURLFactory',
         AVAILABLE_SMS_TEMPLATES: BASE_REST_PREFIX
         + "/setup/emailTemplate/smsTypes",
         SMS_SERVER_PROPERTIES: BASE_REST_PREFIX + "/setup/properties",
-        SMS_QUEUE: BASE_REST_PREFIX + "/sms/queue"
+        SMS_QUEUE: BASE_REST_PREFIX + "/sms/queue",
+        ACCOUNT_INFO: BASE_REST_PREFIX + "/user"
       }
     }
 );

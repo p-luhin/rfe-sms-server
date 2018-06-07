@@ -5,14 +5,9 @@
   .module('sms-server')
   .run(run);
 
-  run.$inject = ['$cookies'];
+  run.$inject = ['loginService'];
 
-  function run($cookies) {
-    if (!$cookies.get('auth_token')) {
-      if (localStorage.getItem('authentication')) {
-        var auth = JSON.parse(localStorage.getItem('authentication'));
-        $cookies.put('auth_token', auth.token);
-      }
-    }
+  function run(loginService) {
+    loginService.account();
   }
 })();

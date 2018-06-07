@@ -16,7 +16,8 @@
       setAuthentication: setAuthentication,
       logout: logout,
       isAuthenticated: isAuthenticated,
-      getCurrentUserName: getCurrentUserName
+      getCurrentUserName: getCurrentUserName,
+      account: account
     };
 
     function logIn(user) {
@@ -31,7 +32,7 @@
     }
 
     function setAuthentication() {
-      $rootScope.authenticated = true;
+      account();
     }
 
     function logout() {
@@ -50,6 +51,17 @@
     function getCurrentUserName() {
       var auth = JSON.parse(localStorage.getItem(localStorageAuthName));
       return auth.username;
+    }
+
+    function account() {
+      $http.get(RestURLFactory.ACCOUNT_INFO).then(
+          function (promise) {
+            $rootScope.authenticated = true;
+            localStorage.setItem(localStorageAuthName, promise.data);
+          }, function (reject) {
+            $rootScope.authenticated = false;
+            $location.path('/login');
+          });
     }
   }
 

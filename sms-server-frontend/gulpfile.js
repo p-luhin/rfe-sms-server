@@ -13,15 +13,15 @@ const TARGET_WATCHER_FOLDER = 'target/classes/META-INF/resources';
 
 
 function makeStyles() {
-  concatCss(TARGET_FOLDER);
+  return concatCss(TARGET_FOLDER);
 }
 
 function makeScripts() {
-  buildScripts(TARGET_FOLDER);
+  return buildScripts(TARGET_FOLDER);
 }
 
 function makeTemplates() {
-  buildTemplates(TARGET_FOLDER);
+  return buildTemplates(TARGET_FOLDER);
 }
 
 //temp solution

@@ -1,6 +1,8 @@
 package by.bsu.rfe.smsservice.security.common;
 
-import java.util.ArrayList;
+import static by.bsu.rfe.smsservice.common.Constants.APPLICATION_AUTHORITY;
+import static java.util.Collections.singletonList;
+
 import java.util.Collection;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,7 +26,7 @@ public class ApplicationAuthentication implements Authentication {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return new ArrayList<>();
+    return singletonList(APPLICATION_AUTHORITY);
   }
 
   @Override

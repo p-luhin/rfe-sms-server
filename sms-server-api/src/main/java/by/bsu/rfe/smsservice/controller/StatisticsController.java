@@ -1,5 +1,6 @@
 package by.bsu.rfe.smsservice.controller;
 
+import static by.bsu.rfe.smsservice.common.Constants.ROLE_USER;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -10,6 +11,7 @@ import by.bsu.rfe.smsservice.service.StatisticsService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Created by pluhin on 12/27/15.
  */
 @Controller
+@Secured({ROLE_USER})
 @RequestMapping(value = "/rest/statistics", produces = APPLICATION_JSON_UTF8_VALUE)
 public class StatisticsController {
 

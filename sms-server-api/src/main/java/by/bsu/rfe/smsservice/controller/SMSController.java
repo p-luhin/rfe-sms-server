@@ -1,5 +1,7 @@
 package by.bsu.rfe.smsservice.controller;
 
+import static by.bsu.rfe.smsservice.common.Constants.ROLE_APPLICATION;
+import static by.bsu.rfe.smsservice.common.Constants.ROLE_USER;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.ResponseEntity.noContent;
 import static org.springframework.http.ResponseEntity.ok;
@@ -19,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
 @Controller
+@Secured({ROLE_USER})
 @RequestMapping(value = "/rest", produces = APPLICATION_JSON_UTF8_VALUE)
 public class SMSController {
 
@@ -47,6 +51,7 @@ public class SMSController {
     return ok(sendSmsService.sendCustom(requestDTO));
   }
 
+  @Secured({ROLE_USER, ROLE_APPLICATION})
   @PostMapping(value = "/sms/send/template", consumes = APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<SMSResultDTO> sendTemplateSms(
       @RequestBody @Valid TemplateSmsRequestDTO requestDTO) {

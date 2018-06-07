@@ -1,34 +1,28 @@
 package by.bsu.rfe.smsservice.common.dto;
 
-/**
- * Created by pluhin on 3/21/16.
- */
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(callSuper = false)
 public class UserDTO extends CreatedDetails {
-    private Integer id;
-    private String username;
-    private String token;
 
-    public Integer getId() {
-        return id;
-    }
+  private Integer id;
+  private String username;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public Integer getId() {
+    return id;
+  }
 
-    public String getUsername() {
-        return username;
-    }
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+  public String getUsername() {
+    return username;
+  }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
+  public void setUsername(String username) {
+    this.username = username;
+  }
 }

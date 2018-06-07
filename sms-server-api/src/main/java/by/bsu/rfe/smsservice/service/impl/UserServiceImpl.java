@@ -13,6 +13,7 @@ import by.bsu.rfe.smsservice.service.SendEmailService;
 import by.bsu.rfe.smsservice.service.UserService;
 import by.bsu.rfe.smsservice.util.DozerUtil;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,6 +21,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -137,6 +139,14 @@ public class UserServiceImpl implements UserService {
 
     userEntity.setPassword(passwordDTO.getNewPassword());
     userRepository.saveAndFlush(userEntity);
+  }
+
+  @Override
+  public UserDTO getAccountInfo() {
+    String currentUsername = SecurityUtil.getCurrentUsername();
+    return Optional.ofNullable(userRepository.findByUsername(currentUsername))
+        .map(user -> mapper.map(user, UserDTO.class))
+        .orElseThrow(() -> new UsernameNotFoundException(currentUsername + " was not found"));
   }
 
   private String generatePassword() {

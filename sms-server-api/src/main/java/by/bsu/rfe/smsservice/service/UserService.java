@@ -24,4 +24,6 @@ public interface UserService {
   void removeUser(Integer id);
 
   void changePassword(ChangePasswordDTO passwordDTO);
+
+  UserDTO getAccountInfo();
 }
