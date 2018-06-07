@@ -1,6 +1,6 @@
 package by.bsu.rfe.smsservice.security.handler;
 
-import by.bsu.rfe.smsservice.exception.InvalidCredentialsException;
+import by.bsu.rfe.smsservice.exception.InvalidAuthenticationCredentialsException;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +15,6 @@ public class ErrorAuthenticationHandler implements AuthenticationFailureHandler 
   @Override
   public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
       AuthenticationException exception) throws IOException, ServletException {
-    throw new InvalidCredentialsException("Bad credentials");
+    throw new InvalidAuthenticationCredentialsException("Bad credentials");
   }
 }

@@ -112,12 +112,7 @@ public class StatisticsServiceImpl implements StatisticsService {
       statisticsEntity.setSentDate(new Date());
       statisticsEntity.setError(response.isError());
       statisticsEntity.setResponse(response.getTextResponse());
-      if (StringUtils.isEmpty(requestDTO.getSenderName())) {
-        statisticsEntity
-            .setSender(credentialsService.getDefaultCredentialsForCurrentUser().getSender());
-      } else {
-        statisticsEntity.setSender(requestDTO.getSenderName());
-      }
+      statisticsEntity.setSender(requestDTO.getSenderName());
       statisticsEntity.setRecipient(recipient.getName());
       statisticsEntity.setRecipientType(recipient.getRecipientType());
       statisticsEntity.setText(

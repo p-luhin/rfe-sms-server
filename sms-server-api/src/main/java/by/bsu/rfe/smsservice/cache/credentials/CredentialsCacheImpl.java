@@ -1,30 +1,29 @@
 package by.bsu.rfe.smsservice.cache.credentials;
 
+import static by.bsu.rfe.smsservice.security.util.SecurityUtil.getCurrentUsername;
+
 import by.bsu.rfe.smsservice.common.entity.CredentialsEntity;
 import by.bsu.rfe.smsservice.common.entity.ExternalApplicationEntity;
-import by.bsu.rfe.smsservice.common.entity.UserEntity;
-import by.bsu.rfe.smsservice.security.util.SecurityUtil;
+import by.bsu.rfe.smsservice.exception.CacheAlreadyLockedException;
+import by.bsu.rfe.smsservice.exception.CredentialsNotFoundException;
 import by.bsu.rfe.smsservice.service.CredentialsService;
 import by.bsu.rfe.smsservice.service.ExternalApplicationService;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
 public class CredentialsCacheImpl implements CredentialsCache {
-
-  @Value("${credentials.cache.enabled:false}")
-  private Boolean enableCredentialsCache;
 
   @Autowired
   private CredentialsService credentialsService;
@@ -32,90 +31,75 @@ public class CredentialsCacheImpl implements CredentialsCache {
   @Autowired
   private ExternalApplicationService applicationService;
 
-  private Map<String, List<CredentialsEntity>> credentialsByUsername;
-  private Map<String, CredentialsEntity> defaultCredentialsByUsername;
+  private volatile boolean locked = false;
+
+  private Map<String, List<CredentialsEntity>> cache = new HashMap<>();
 
   @PostConstruct
   public void startCache() {
-    if (enableCredentialsCache) {
-      initCache();
-    } else {
-      log.info("CREDENTIALS CACHE IS DISABLED");
-    }
-  }
-
-  private void initCache() {
     log.info("INITIALIZING CREDENTIALS CACHE");
-    int count = 0;
+
+    if (locked) {
+      throw new CacheAlreadyLockedException();
+    }
+
+    lockCache();
+
     long startTime = System.currentTimeMillis();
 
-    credentialsByUsername = new ConcurrentHashMap<>();
-    defaultCredentialsByUsername = new ConcurrentHashMap<>();
-
     List<CredentialsEntity> userCredentials = credentialsService.getAllCredentials();
+    log.info("LOADED {} credentials " + userCredentials.size());
 
-    for (CredentialsEntity credentials : userCredentials) {
-      log.info("CACHE: LOADED CREDENTIALS WITH SENDER NAME: {}", credentials.getSender());
-      Set<UserEntity> usersAllowedToUse = credentials.getUsers();
-      for (UserEntity userEntity : usersAllowedToUse) {
-        putToAllCache(userEntity, credentials);
-        putToDefaultCache(userEntity);
-      }
-      count++;
-    }
+    userCredentials
+        .forEach(credentialsEntity -> {
+          credentialsEntity.getUsers()
+              .forEach(user -> {
+                if (!cache.containsKey(user.getUsername())) {
+                  cache.put(user.getUsername(), new ArrayList<>());
+                }
 
-    List<ExternalApplicationEntity> allApplications = applicationService
+                cache.get(user.getUsername()).add(credentialsEntity);
+              });
+        });
+
+    List<ExternalApplicationEntity> applications = applicationService
         .getAllApplicationEntities();
+    log.info("LOADED {} applications", applications.size());
 
-    for (ExternalApplicationEntity applicationEntity : allApplications) {
-      log.info("CACHE: LOADED APPLICATION CREDENTIALS WITH SENDER NAME: {}",
-          applicationEntity.getDefaultCredentials().getSender());
-      defaultCredentialsByUsername
-          .put(applicationEntity.getApplicationName(), applicationEntity.getDefaultCredentials());
-      count++;
-    }
+    applications
+        .forEach(application -> {
+          cache.put(application.getApplicationName(),
+              Collections.singletonList(application.getDefaultCredentials()));
+        });
 
     log.info("CREDENTIALS CACHE INITIALIZED IN {} ms", System.currentTimeMillis() - startTime);
-    log.info("TOTAL COUNT: {}", count);
+
+    unlockCache();
   }
 
   @Override
   public List<CredentialsEntity> getAllUserCredentals(String username) {
-    return credentialsByUsername.get(username);
+    while (locked) {}
+    return cache.get(username);
   }
 
   @Override
-  public List<CredentialsEntity> getAllCurrentUserCredentals() {
-    String username = SecurityUtil.getCurrentUsername();
-    return credentialsByUsername.get(username);
+  public Set<String> getSenderNamesForCurrentUser() {
+    while (locked) {}
+    return getAllUserCredentals(getCurrentUsername())
+        .stream()
+        .map(CredentialsEntity::getSender)
+        .collect(Collectors.toSet());
   }
 
   @Override
-  public CredentialsEntity getDefaultCredentialsForUser(String username) {
-    return defaultCredentialsByUsername.get(username);
-  }
-
-  @Override
-  public CredentialsEntity getDefaultCredentialsForCurrentUser() {
-    String username = SecurityUtil.getCurrentUsername();
-    return defaultCredentialsByUsername.get(username);
-  }
-
-  private void putToAllCache(UserEntity userEntity, CredentialsEntity credentialsEntity) {
-    if (credentialsByUsername.containsKey(userEntity.getUsername())) {
-      credentialsByUsername.get(userEntity.getUsername()).add(credentialsEntity);
-    } else {
-      List<CredentialsEntity> credentialsEntities = new ArrayList<>();
-      credentialsEntities.add(credentialsEntity);
-      credentialsByUsername.put(userEntity.getUsername(), credentialsEntities);
-    }
-  }
-
-  private void putToDefaultCache(UserEntity userEntity) {
-    if (userEntity.getDefaultUserCredentials() != null) {
-      defaultCredentialsByUsername
-          .put(userEntity.getUsername(), userEntity.getDefaultUserCredentials());
-    }
+  public CredentialsEntity getCredentialsBySenderNameForCurrentUser(String senderName) {
+    while (locked) {}
+    return getAllUserCredentals(getCurrentUsername())
+        .stream()
+        .filter(credentialsEntity -> credentialsEntity.getSender().equals(senderName))
+        .findFirst()
+        .orElseThrow(CredentialsNotFoundException::new);
   }
 
   @Override
@@ -123,29 +107,13 @@ public class CredentialsCacheImpl implements CredentialsCache {
     startCache();
   }
 
-  public Boolean isCacheEnabled() {
-    return enableCredentialsCache;
+  private void lockCache() {
+    locked = true;
+    log.info("Successfully acquired cache lock");
   }
 
-  @Override
-  public Set<String> getSenderNamesForCurrentUser() {
-    List<CredentialsEntity> credentialsEntities = ListUtils
-        .emptyIfNull(getAllCurrentUserCredentals());
-    Set<String> senderNames = credentialsEntities.stream()
-        .map(credentialsEntity -> credentialsEntity.getSender()).collect(Collectors.toSet());
-    return senderNames;
-  }
-
-  @Override
-  public CredentialsEntity getCredentialsBySenderNameForCurrentUser(String senderName) {
-    List<CredentialsEntity> userCredentials = getAllCurrentUserCredentals();
-
-    for (CredentialsEntity credentialsEntity : userCredentials) {
-      if (credentialsEntity.getSender().equals(senderName)) {
-        return credentialsEntity;
-      }
-    }
-
-    return null;
+  private void unlockCache() {
+    locked = false;
+    log.info("Cache lock released");
   }
 }

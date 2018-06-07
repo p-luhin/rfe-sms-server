@@ -1,5 +1,7 @@
 package by.bsu.rfe.smsservice.service.impl;
 
+import static java.util.Collections.EMPTY_LIST;
+
 import by.bsu.rfe.smsservice.cache.credentials.CredentialsCache;
 import by.bsu.rfe.smsservice.common.dto.CredentialsDTO;
 import by.bsu.rfe.smsservice.common.dto.ShareCredentialsDTO;
@@ -49,34 +51,13 @@ public class CredentialsServiceImpl implements CredentialsService {
   }
 
   @Override
-  public CredentialsEntity getDefaultCredentialsForCurrentUser() {
-    if (credentialsCache.isCacheEnabled()) {
-      return credentialsCache.getDefaultCredentialsForCurrentUser();
-    } else {
-      String username = SecurityUtil.getCurrentUsername();
-      UserEntity userEntity = userService.findByUsername(username);
-
-      if (userEntity != null) {
-        return userEntity.getDefaultUserCredentials();
-      } else {
-        return externalApplicationService.getByName(username).getDefaultCredentials();
-      }
-    }
-  }
-
-  @Override
   public CredentialsEntity getCredentialsForSenderName(String senderName) {
     return credentialsRepository.getCredentialsForSenderName(senderName);
   }
 
   @Override
   public CredentialsEntity getUserCredentialsForSenderName(String senderName) {
-    if (credentialsCache.isCacheEnabled()) {
-      return credentialsCache.getCredentialsBySenderNameForCurrentUser(senderName);
-    } else {
-      String username = SecurityUtil.getCurrentUsername();
-      return credentialsRepository.getUserCredentialsForSenderName(username, senderName);
-    }
+    return credentialsCache.getCredentialsBySenderNameForCurrentUser(senderName);
   }
 
   @Override
@@ -88,15 +69,10 @@ public class CredentialsServiceImpl implements CredentialsService {
 
   @Override
   public List<CredentialsDTO> getUserCredentials(String username) {
-    List<CredentialsEntity> credentialsEntities = null;
-    if (credentialsCache.isCacheEnabled()) {
-      credentialsEntities = credentialsCache.getAllUserCredentals(username);
-    } else {
-      credentialsEntities = credentialsRepository.getAllUserCredentials(username);
-    }
+    List<CredentialsEntity> credentialsEntities = credentialsCache.getAllUserCredentals(username);
 
     if (credentialsEntities == null) {
-      return null;
+      return EMPTY_LIST;
     }
 
     List<CredentialsDTO> credentialsDTOs = DozerUtil

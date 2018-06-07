@@ -17,6 +17,7 @@ import by.bsu.rfe.smsservice.common.entity.PersonEntity;
 import by.bsu.rfe.smsservice.common.enums.RecipientType;
 import by.bsu.rfe.smsservice.common.request.Request;
 import by.bsu.rfe.smsservice.common.websms.WebSMSRest;
+import by.bsu.rfe.smsservice.exception.CredentialsNotFoundException;
 import by.bsu.rfe.smsservice.service.CredentialsService;
 import by.bsu.rfe.smsservice.service.RecipientService;
 import by.bsu.rfe.smsservice.validator.mobilenumber.MobileNumberValidator;
@@ -50,15 +51,11 @@ public abstract class BaseSmsRequestBuilder<T extends BaseSmsRequestDTO> extends
   protected Request buildBaseRequest(T requestDTO) {
     Request request = new Request();
 
-    CredentialsEntity credentials;
-    if (StringUtils.isEmpty(requestDTO.getSenderName())) {
-      credentials = credentialsService.getDefaultCredentialsForCurrentUser();
-    } else {
-      credentials = credentialsService.getUserCredentialsForSenderName(requestDTO.getSenderName());
-    }
+    CredentialsEntity credentials = credentialsService
+        .getUserCredentialsForSenderName(requestDTO.getSenderName());
 
     if (credentials == null) {
-      throw new NullPointerException("User doesn't allowed to send sms.");
+      throw new CredentialsNotFoundException();
     }
 
     request.addParameter(new BasicNameValuePair(USER.getRequestParam(), credentials.getUsername()));

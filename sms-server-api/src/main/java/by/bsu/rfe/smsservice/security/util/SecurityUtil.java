@@ -1,7 +1,10 @@
 package by.bsu.rfe.smsservice.security.util;
 
+import static by.bsu.rfe.smsservice.common.Constants.USER_AUTHORITY;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
+import static org.springframework.security.core.context.SecurityContextHolder.getContext;
 
+import by.bsu.rfe.smsservice.common.Constants;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
@@ -34,11 +37,15 @@ public class SecurityUtil {
   }
 
   public static String getCurrentUsername() {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    Authentication authentication = getContext().getAuthentication();
     String username = null;
     if (authentication != null) {
       username = authentication.getName();
     }
     return StringUtils.isNotEmpty(username) ? username : ANONYMOUS_USERNAME;
+  }
+
+  public static boolean currentUserHasUserRole() {
+    return getContext().getAuthentication().getAuthorities().contains(USER_AUTHORITY);
   }
 }

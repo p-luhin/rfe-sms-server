@@ -9,6 +9,7 @@ import static org.springframework.http.ResponseEntity.status;
 
 import by.bsu.rfe.smsservice.common.dto.error.BaseExceptionDTO;
 import by.bsu.rfe.smsservice.common.dto.error.FieldErrorDTO;
+import by.bsu.rfe.smsservice.exception.CredentialsNotFoundException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -53,6 +54,13 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
         });
 
     return status(UNPROCESSABLE_ENTITY).body(exceptionDTO);
+  }
+
+  @ExceptionHandler(CredentialsNotFoundException.class)
+  public ResponseEntity<Object> handleCredentialsNotFoundException(
+      CredentialsNotFoundException ex) {
+    return status(BAD_REQUEST).body(
+        new BaseExceptionDTO(BAD_REQUEST.value(), "User nas no valid credentials to send sms"));
   }
 
   @ExceptionHandler(Exception.class)

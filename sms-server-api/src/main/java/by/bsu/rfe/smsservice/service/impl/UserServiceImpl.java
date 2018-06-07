@@ -79,13 +79,8 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public Set<String> getSenderNames() {
-    if (!credentialsCache.isCacheEnabled()) {
-      return credentialsService.getUserCredentials(SecurityUtil.getCurrentUsername())
-          .stream()
-          .map(CredentialsDTO::getSender)
-          .collect(Collectors.toSet());
-    }
     return credentialsCache.getSenderNamesForCurrentUser();
+
   }
 
   @Override
@@ -94,6 +89,7 @@ public class UserServiceImpl implements UserService {
     UserEntity userEntity = userRepository.findByUsername(SecurityUtil.getCurrentUsername());
     credentialsEntity.getUsers().add(userEntity);
     credentialsService.saveCredentials(credentialsEntity);
+    credentialsCache.reloadCache();
   }
 
   @Override
