@@ -66,15 +66,6 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserDTO validateToken(String token) {
-    UserEntity userEntity = userRepository.findByToken(token);
-    if (userEntity != null) {
-      return mapper.map(userEntity, UserDTO.class);
-    }
-    return null;
-  }
-
-  @Override
   public UserEntity findByUsername(String username) {
     return userRepository.findByUsername(username);
   }
@@ -82,11 +73,6 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserEntity findById(Integer id) {
     return userRepository.findOne(id);
-  }
-
-  @Override
-  public UserEntity getUserByToken(String token) {
-    return userRepository.findByToken(token);
   }
 
   @Override

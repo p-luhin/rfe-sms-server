@@ -12,7 +12,7 @@
 	<link rel="icon" type="image/png" href="resources/favicon-16x16.png" sizes="16x16" />
 </head>
 <body ng-controller="applicationCtrl">
-	<div ng-include="'common/navbar.tmpl.html'"></div>
+	<div ng-show="authenticated" ng-include="'common/navbar.tmpl.html'"></div>
 	<div class="col-md-12">
 		<toaster-container toaster-options="{'position-class': 'toast-top-full-width'}"></toaster-container>
 		<ng-view/>

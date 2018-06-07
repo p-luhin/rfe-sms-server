@@ -1,10 +1,8 @@
 package by.bsu.rfe.smsservice.scheduler.dataretention;
 
 import by.bsu.rfe.smsservice.common.SpringContextHolder;
-import by.bsu.rfe.smsservice.common.entity.AuthenticationTokenEntity;
 import by.bsu.rfe.smsservice.common.entity.GroupEntity;
 import by.bsu.rfe.smsservice.common.entity.PersonEntity;
-import by.bsu.rfe.smsservice.service.AuthenticationTokenService;
 import by.bsu.rfe.smsservice.service.RecipientService;
 import java.util.List;
 import org.quartz.Job;
@@ -21,7 +19,6 @@ public class DataRetentionJob implements Job {
   public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
     LOGGER.info("Starting data retention...");
     dropTemporaryRecipients();
-    dropExpiredTokens();
     LOGGER.info("Finished data retention");
   }
 
@@ -42,19 +39,6 @@ public class DataRetentionJob implements Job {
     personsToRemove.stream().forEach(person -> {
       LOGGER.info("Removing {} person", person.getFirstName() + " " + person.getLastName());
       recipientService.removePerson(person.getId());
-    });
-  }
-
-  private void dropExpiredTokens() {
-    AuthenticationTokenService tokenService = SpringContextHolder
-        .getBean(AuthenticationTokenService.class);
-    List<AuthenticationTokenEntity> tokens = tokenService.getExpiredTokens();
-
-    LOGGER.info("Found {} expired tokens", tokens.size());
-
-    tokens.stream().forEach(token -> {
-      LOGGER.info("Removing token {}", token.getToken());
-      tokenService.removeToken(token.getId());
     });
   }
 }

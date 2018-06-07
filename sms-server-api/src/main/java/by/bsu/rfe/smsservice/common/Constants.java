@@ -12,4 +12,7 @@ public interface Constants {
 
   String PROFILE_LOCAL = "local";
   String PROFILE_PROD = "prod";
+
+  String ROLE_USER = "ROLE_USER";
+  String ROLE_APPLICATION = "ROLE_APPLICATION";
 }

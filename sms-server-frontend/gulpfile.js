@@ -11,6 +11,19 @@ const SOURCE_FOLDER = 'webapp/resources';
 const TARGET_FOLDER = './.tmp/META-INF/resources';
 const TARGET_WATCHER_FOLDER = 'target/classes/META-INF/resources';
 
+
+function makeStyles() {
+  concatCss(TARGET_FOLDER);
+}
+
+function makeScripts() {
+  buildScripts(TARGET_FOLDER);
+}
+
+function makeTemplates() {
+  buildTemplates(TARGET_FOLDER);
+}
+
 //temp solution
 gulp.task('libs-js', function () {
   return gulp.src([SOURCE_FOLDER + '/libs/angular/angular.min.js',
@@ -32,15 +45,15 @@ gulp.task('libs-js', function () {
   .pipe(gulp.dest(TARGET_FOLDER + '/js'));
 });
 
-gulp.task('css', concatCss);
+gulp.task('css', makeStyles);
 
 function concatCss(target) {
   return gulp.src('webapp/**/*.css')
   .pipe(concat('styles.css'))
-  .pipe(gulp.dest((target || TARGET_FOLDER) + '/styles'));
+  .pipe(gulp.dest(target + '/styles'));
 }
 
-gulp.task('scripts-js', buildScripts);
+gulp.task('scripts-js', makeScripts);
 
 function buildScripts(target) {
   return gulp.src('webapp/resources/sms-server/**/*.js')
@@ -48,7 +61,7 @@ function buildScripts(target) {
   .pipe(concat('app.js'))
   .pipe(ngAnnotate())
   .pipe(uglify())
-  .pipe(gulp.dest((target || TARGET_FOLDER) + '/js'));
+  .pipe(gulp.dest(target + '/js'));
 }
 
 gulp.task('inject', ['libs-js', 'scripts-js', 'templatecache', 'css', 'fonts'],
@@ -68,7 +81,7 @@ gulp.task('inject', ['libs-js', 'scripts-js', 'templatecache', 'css', 'fonts'],
       .pipe(gulp.dest(TARGET_FOLDER));
     });
 
-gulp.task('templatecache', buildTemplates);
+gulp.task('templatecache', makeTemplates);
 
 function buildTemplates(target) {
   return gulp.src('webapp/resources/sms-server/**/*.html')
@@ -77,7 +90,7 @@ function buildTemplates(target) {
         module: 'sms-server',
         standAlone: false
       }))
-  .pipe(gulp.dest((target || TARGET_FOLDER) + '/js/'));
+  .pipe(gulp.dest(target + '/js/'));
 }
 
 gulp.task('fonts', copyFonts);
@@ -88,15 +101,15 @@ function copyFonts() {
 }
 
 function watchStyles() {
-  concatCss(TARGET_WATCHER_FOLDER);
+  return concatCss(TARGET_WATCHER_FOLDER);
 }
 
 function watchScripts() {
-  buildScripts(TARGET_WATCHER_FOLDER);
+  return buildScripts(TARGET_WATCHER_FOLDER);
 }
 
 function watchTemplates() {
-  buildTemplates(TARGET_WATCHER_FOLDER);
+  return buildTemplates(TARGET_WATCHER_FOLDER);
 }
 
 gulp.task('watch-styles', function () {

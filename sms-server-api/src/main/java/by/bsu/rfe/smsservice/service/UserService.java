@@ -9,13 +9,9 @@ import java.util.Set;
 
 public interface UserService {
 
-  UserDTO validateToken(String token);
-
   UserEntity findByUsername(String username);
 
   UserEntity findById(Integer id);
-
-  UserEntity getUserByToken(String token);
 
   Set<String> getSenderNames();
 
