@@ -1,5 +1,7 @@
 package by.bsu.rfe.smsservice.common.entity;
 
+import static by.bsu.rfe.smsservice.common.constants.ValidationConstants.EMAIL_REGEX;
+import static by.bsu.rfe.smsservice.common.constants.ValidationConstants.PHONE_NUMBER_REGEX;
 import static javax.persistence.CascadeType.DETACH;
 import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.CascadeType.PERSIST;
@@ -25,10 +27,11 @@ public class PersonEntity extends CreationDetails {
   @Column(name = "last_name", nullable = false)
   private String lastName;
 
-  @Pattern(regexp = "^\\+?(\\d){12}$")
+  @Pattern(regexp = PHONE_NUMBER_REGEX)
   @Column(name = "phone_number", nullable = false, unique = true)
   private String phoneNumber;
 
+  @Pattern(regexp = EMAIL_REGEX)
   @Column(name = "email", nullable = false, unique = true)
   private String email;
 
@@ -40,4 +43,8 @@ public class PersonEntity extends CreationDetails {
 
   @Column(name = "temporary")
   private boolean temporary;
+
+  public void setId(Integer id) {
+    super.setId(id);
+  }
 }

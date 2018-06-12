@@ -3,6 +3,7 @@ package by.bsu.rfe.smsservice.service.impl;
 import static by.bsu.rfe.smsservice.common.constants.GeneralConstants.EXAMPLE_EMAIL_POSTFIX;
 import static by.bsu.rfe.smsservice.common.constants.GeneralConstants.GENERATED_GROUP_NAME_PREFIX;
 import static by.bsu.rfe.smsservice.common.constants.GeneralConstants.GENERATED_NAME;
+import static by.bsu.rfe.smsservice.util.DozerUtil.mapList;
 import static by.bsu.rfe.smsservice.util.PageUtil.createPage;
 
 import by.bsu.rfe.smsservice.common.dto.GroupDTO;
@@ -19,29 +20,36 @@ import by.bsu.rfe.smsservice.service.RecipientService;
 import by.bsu.rfe.smsservice.util.DozerUtil;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Created by pluhin on 3/20/16.
- */
 @Service
 public class RecipientServiceImpl implements RecipientService {
 
   @Autowired
   private PersonRepository personRepository;
+
   @Autowired
   private GroupRepository groupRepository;
+
   @Autowired
   private Mapper mapper;
 
   @Override
+  @Transactional
   public void addGroup(GroupDTO groupDTO) {
     GroupEntity groupEntity = mapper.map(groupDTO, GroupEntity.class);
+    groupEntity.setPersons(
+        personRepository.findAll(
+            groupDTO.getPersons().stream().map(PersonDTO::getId).collect(Collectors.toSet())
+        )
+    );
 
     if (groupEntity.isNew()) {
       groupRepository.saveAndFlush(groupEntity);
@@ -120,31 +128,29 @@ public class RecipientServiceImpl implements RecipientService {
     if (StringUtils.isEmpty(query)) {
       Page<PersonEntity> personEntitiesPage = personRepository.findAll(pageable);
       return new PageResponseDTO<>(
-          DozerUtil.mapList(mapper, personEntitiesPage.getContent(), PersonDTO.class),
+          mapList(mapper, personEntitiesPage.getContent(), PersonDTO.class),
           personEntitiesPage.getTotalElements());
     }
 
     Page<PersonEntity> personEntitiesPage = personRepository.findPageByQuery(query, pageable);
     return new PageResponseDTO<>(
-        DozerUtil.mapList(mapper, personEntitiesPage.getContent(), PersonDTO.class),
+        mapList(mapper, personEntitiesPage.getContent(), PersonDTO.class),
         personEntitiesPage.getTotalElements());
   }
 
   @Override
   public List<PersonDTO> getAllPersons() {
-    return DozerUtil.mapList(mapper, personRepository.findAll(), PersonDTO.class);
+    return mapList(mapper, personRepository.findAll(), PersonDTO.class);
   }
 
   @Override
   public List<PersonDTO> getPersonsWithGroup(Integer groupId) {
-    return DozerUtil
-        .mapList(mapper, personRepository.getPersonsWithGroup(groupId), PersonDTO.class);
+    return mapList(mapper, personRepository.getPersonsWithGroup(groupId), PersonDTO.class);
   }
 
   @Override
   public List<PersonDTO> getPersonsWithoutGroup(Integer groupId) {
-    return DozerUtil
-        .mapList(mapper, personRepository.getPersonsWithoutGroup(groupId), PersonDTO.class);
+    return mapList(mapper, personRepository.getPersonsWithoutGroup(groupId), PersonDTO.class);
   }
 
   @Override
@@ -159,7 +165,7 @@ public class RecipientServiceImpl implements RecipientService {
     }
 
     return new PageResponseDTO<>(
-        DozerUtil.mapList(mapper, entities.getContent(), GroupDTO.class),
+        mapList(mapper, entities.getContent(), GroupDTO.class),
         entities.getTotalElements());
   }
 
