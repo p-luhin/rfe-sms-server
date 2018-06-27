@@ -10,7 +10,6 @@ import by.bsu.rfe.smsservice.common.dto.PersonDTO;
 import by.bsu.rfe.smsservice.common.dto.RecipientDTO;
 import by.bsu.rfe.smsservice.common.dto.page.PageRequestDTO;
 import by.bsu.rfe.smsservice.common.dto.page.PageResponseDTO;
-import by.bsu.rfe.smsservice.common.entity.PersonEntity;
 import by.bsu.rfe.smsservice.service.RecipientService;
 import java.util.List;
 import javax.validation.Valid;
