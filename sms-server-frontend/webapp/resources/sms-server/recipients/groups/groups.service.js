@@ -47,7 +47,7 @@
     }
 
     function removeGroup(id) {
-      return $http.delete(RestURLFactory.GROUP + '?groupId=' + id)
+      return $http.delete(RestURLFactory.GROUP + '/' + id)
     }
   }
 })();

@@ -15,7 +15,7 @@
     };
 
     function removePerson(id) {
-      return $http.delete(RestURLFactory.PERSONS + '?personId=' + id);
+      return $http.delete(RestURLFactory.PERSONS + '/' + id);
     }
 
     function getPersons(skip, currentPageSize, sortField, sortDirection) {
