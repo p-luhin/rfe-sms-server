@@ -1,6 +1,6 @@
 package by.bsu.rfe.smsservice.service.impl;
 
-import by.bsu.rfe.smsservice.builder.RequestBuilderHolder;
+import by.bsu.rfe.smsservice.builder.balance.BalanceRequestBuilder;
 import by.bsu.rfe.smsservice.common.request.BalanceRequest;
 import by.bsu.rfe.smsservice.common.request.Request;
 import by.bsu.rfe.smsservice.common.response.BalanceResponse;
@@ -16,12 +16,12 @@ public class BalanceServiceImpl implements BalanceService {
   private WebSmsService webSmsService;
 
   @Autowired
-  private RequestBuilderHolder requestBuilderHolder;
+  private BalanceRequestBuilder balanceRequestBuilder;
 
   @Override
   public Double retrieveBalance(String username, String apiKey) {
     BalanceRequest balanceRequest = new BalanceRequest(username, apiKey);
-    Request request = requestBuilderHolder.getBalanceRequestBuilder().build(balanceRequest);
+    Request request = balanceRequestBuilder.build(balanceRequest);
     BalanceResponse response = webSmsService.getBalance(request);
     return response.getBalance();
   }

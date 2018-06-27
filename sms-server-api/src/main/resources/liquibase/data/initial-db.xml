@@ -149,7 +149,7 @@
       <column name="initiated_by" type="VARCHAR(255)">
         <constraints nullable="false"/>
       </column>
-      <column name="parameters_json" type="BLOB"/>
+      <column name="parameters_json" type="TEXT"/>
       <column name="sms_type" type="VARCHAR(255)"/>
     </createTable>
   </changeSet>
@@ -181,7 +181,7 @@
       <column name="created_date" type="datetime(6)">
         <constraints nullable="false"/>
       </column>
-      <column defaultValueNumeric="1" name="enabled" type="TINYINT(3)">
+      <column defaultValueBoolean="true" name="enabled" type="BOOLEAN">
         <constraints nullable="false"/>
       </column>
     </createTable>

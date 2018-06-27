@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Data;
@@ -18,7 +19,7 @@ public class SmsQueueEntity extends CreationDetails {
   @Column(name = "recipient")
   private String recipient;
 
-  @Column(name = "recipient_type")
+  @Column(name = "recipient_type", columnDefinition = "enum")
   @Enumerated(EnumType.STRING)
   private RecipientType recipientType;
 
@@ -32,6 +33,7 @@ public class SmsQueueEntity extends CreationDetails {
   @Column(name = "duplicate_email")
   private boolean duplicateEmail;
 
+  @Lob
   @Column(name = "parameters_json")
   private String parametersJson;
 

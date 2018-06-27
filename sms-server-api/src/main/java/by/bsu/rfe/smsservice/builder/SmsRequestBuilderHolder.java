@@ -14,16 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RequestBuilderHolder {
+public class SmsRequestBuilderHolder {
 
   private BulkSmsRequestBuilder bulkSmsRequestBuilder;
   private CustomSmsRequestBuilder customSmsRequestBuilder;
   private TemplateSmsRequestBuilder templateSmsRequestBuilder;
   private QueueSmsRequestBuilder queueSmsRequestBuilder;
-  private BalanceRequestBuilder balanceRequestBuilder;
 
   @Autowired
-  public RequestBuilderHolder(
+  public SmsRequestBuilderHolder(
       BulkSmsRequestBuilder bulkSmsRequestBuilder,
       CustomSmsRequestBuilder customSmsRequestBuilder,
       TemplateSmsRequestBuilder templateSmsRequestBuilder,
@@ -33,7 +32,6 @@ public class RequestBuilderHolder {
     this.customSmsRequestBuilder = customSmsRequestBuilder;
     this.templateSmsRequestBuilder = templateSmsRequestBuilder;
     this.queueSmsRequestBuilder = queueSmsRequestBuilder;
-    this.balanceRequestBuilder = balanceRequestBuilder;
   }
 
   public BaseSmsRequestBuilder<SmsQueueRequestDTO> getQueueSmsRequestBuilder() {
@@ -50,9 +48,5 @@ public class RequestBuilderHolder {
 
   public BaseSmsRequestBuilder<TemplateSmsRequestDTO> getTemplateSmsRequestBuilder() {
     return templateSmsRequestBuilder;
-  }
-
-  public BalanceRequestBuilder getBalanceRequestBuilder() {
-    return balanceRequestBuilder;
   }
 }

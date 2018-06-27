@@ -45,8 +45,8 @@ public class RecipientController {
     return ok(recipientService.getGroup(id));
   }
 
-  @DeleteMapping("/group")
-  public ResponseEntity removeGroup(@RequestParam Integer groupId) {
+  @DeleteMapping("/group/{id}")
+  public ResponseEntity removeGroup(@PathVariable("id") Integer groupId) {
     recipientService.removeGroup(groupId);
     return noContent().build();
   }
@@ -78,8 +78,8 @@ public class RecipientController {
     return ok(recipientService.getPersonsWithoutGroup(groupId));
   }
 
-  @DeleteMapping("/persons")
-  public ResponseEntity removePerson(@RequestParam Integer personId) {
+  @DeleteMapping("/persons/{id}")
+  public ResponseEntity removePerson(@PathVariable("id") Integer personId) {
     recipientService.removePerson(personId);
     return noContent().build();
   }

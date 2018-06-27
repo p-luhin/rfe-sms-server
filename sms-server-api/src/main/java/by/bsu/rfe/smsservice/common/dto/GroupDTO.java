@@ -4,6 +4,7 @@ import static by.bsu.rfe.smsservice.common.constants.ValidationConstants.GROUP_N
 import static by.bsu.rfe.smsservice.common.constants.ValidationConstants.GROUP_NAME_REGEX;
 import static by.bsu.rfe.smsservice.common.constants.ValidationConstants.MIN_LENGTH;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -20,5 +21,5 @@ public class GroupDTO {
   @Size(min = MIN_LENGTH, max = GROUP_NAME_MAX_LENGTH)
   private String name;
 
-  private List<PersonDTO> persons;
+  private List<PersonDTO> persons = new ArrayList<>();
 }

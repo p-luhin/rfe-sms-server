@@ -1,6 +1,7 @@
 package by.bsu.rfe.smsservice.controller;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
@@ -16,6 +17,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -69,6 +71,11 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
     log.error("", e);
     return status(INTERNAL_SERVER_ERROR)
         .body(new BaseExceptionDTO(INTERNAL_SERVER_ERROR.value(), getMessage(e)));
+  }
+
+  @ExceptionHandler({AccessDeniedException.class})
+  public ResponseEntity<Object> handleAccessDeniedException(Exception ex) {
+    return new ResponseEntity<>(ex.getMessage(), new HttpHeaders(), FORBIDDEN);
   }
 
   private String getMessage(Throwable throwable) {
